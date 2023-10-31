@@ -1,12 +1,13 @@
 package com.example.inhamonchallenge.domain.habit.service;
 
+import com.example.inhamonchallenge.domain.common.exception.UpdateDeniedException;
 import com.example.inhamonchallenge.domain.habit.domain.Habit;
 import com.example.inhamonchallenge.domain.habit.dto.HabitResponse;
 import com.example.inhamonchallenge.domain.habit.dto.SaveHabitRequest;
 import com.example.inhamonchallenge.domain.habit.dto.SaveHabitResponse;
 import com.example.inhamonchallenge.domain.habit.exception.NotFoundHabitException;
 import com.example.inhamonchallenge.domain.habit.repository.HabitRepository;
-import com.example.inhamonchallenge.domain.model.dto.Result;
+import com.example.inhamonchallenge.domain.common.dto.Result;
 import com.example.inhamonchallenge.domain.user.domain.User;
 import com.example.inhamonchallenge.domain.user.exception.NotFoundUserException;
 import com.example.inhamonchallenge.domain.user.repository.UserRepository;
@@ -47,6 +48,16 @@ public class HabitService {
                 .collect(Collectors.toList());
 
         return new Result<>(habitResponses);
+    }
+
+    public SaveHabitResponse updateHabit(SaveHabitRequest request, Long habitId){
+        User user = userRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(NotFoundUserException::new);
+        Habit habit = habitRepository.findById(habitId).orElseThrow(NotFoundHabitException::new);
+        if(habit.getUser().getId() != user.getId()){
+            throw new UpdateDeniedException();
+        }
+        habit.updateHabit(request.getContent(), "xxx", request.getCategory(), String.join(",",request.getHashTag()));
+        return SaveHabitResponse.from(habit);
     }
 
     private String[] getHashtagsArray(String hashtags) {

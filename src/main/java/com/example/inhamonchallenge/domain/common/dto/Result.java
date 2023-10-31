@@ -1,4 +1,4 @@
-package com.example.inhamonchallenge.domain.model.dto;
+package com.example.inhamonchallenge.domain.common.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
