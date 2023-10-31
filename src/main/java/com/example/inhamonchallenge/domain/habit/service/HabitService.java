@@ -60,6 +60,15 @@ public class HabitService {
         return SaveHabitResponse.from(habit);
     }
 
+    public void deleteHabit(Long habitId){
+        User user = userRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(NotFoundUserException::new);
+        Habit habit = habitRepository.findById(habitId).orElseThrow(NotFoundHabitException::new);
+        if(habit.getUser().getId() != user.getId()){
+            throw new UpdateDeniedException();
+        }
+        habitRepository.deleteById(habitId);
+    }
+
     private String[] getHashtagsArray(String hashtags) {
         if (hashtags != null) {
             return hashtags.split(",");

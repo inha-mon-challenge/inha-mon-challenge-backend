@@ -3,7 +3,8 @@ package com.example.inhamonchallenge.global.security;
 public class SecurityUtil {
 
     public static Long getCurrentMemberId() {
-        return 1L;
+        //Spring Security 적용 후 401 응답 테스트
+        return 2L;
     }
 
 }
