@@ -1,7 +1,7 @@
 package com.example.inhamonchallenge.domain.user.domain;
 
-import com.example.inhamonchallenge.domain.model.BaseTime;
-import com.example.inhamonchallenge.domain.model.Role;
+import com.example.inhamonchallenge.domain.common.BaseTime;
+import com.example.inhamonchallenge.domain.common.Role;
 import jakarta.persistence.*;
 import lombok.Getter;
 

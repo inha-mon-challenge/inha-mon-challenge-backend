@@ -1,7 +1,7 @@
 package com.example.inhamonchallenge.domain.habit.domain;
 
-import com.example.inhamonchallenge.domain.model.BaseTime;
-import com.example.inhamonchallenge.domain.model.Category;
+import com.example.inhamonchallenge.domain.common.BaseTime;
+import com.example.inhamonchallenge.domain.common.Category;
 import com.example.inhamonchallenge.domain.user.domain.User;
 import jakarta.persistence.*;
 import lombok.Builder;
@@ -55,5 +55,12 @@ public class Habit extends BaseTime {
         this.currentRecordCnt = currentRecordCnt;
         this.reportCnt = reportCnt;
         this.likeCnt = likeCnt;
+    }
+
+    public void updateHabit(String content, String image, String category, String hashtags){
+        this.content = content;
+        this.image = image;
+        this.category = Category.valueOf(category);
+        this.hashtags = hashtags;
     }
 }

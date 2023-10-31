@@ -1,6 +1,6 @@
 package com.example.inhamonchallenge.domain.follow.domain;
 
-import com.example.inhamonchallenge.domain.model.BaseCreateTime;
+import com.example.inhamonchallenge.domain.common.BaseCreateTime;
 import com.example.inhamonchallenge.domain.user.domain.User;
 import jakarta.persistence.*;
 import lombok.Getter;

@@ -1,10 +1,12 @@
 package com.example.inhamonchallenge.domain.habit.dto;
 
 import com.example.inhamonchallenge.domain.habit.domain.Habit;
-import com.example.inhamonchallenge.domain.model.Category;
+import com.example.inhamonchallenge.domain.common.Category;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.List;
 
 @Getter
 @Builder
@@ -22,6 +24,8 @@ public class SaveHabitResponse {
 
     private String image;
 
+    private List<String> hashtag;
+
     private LocalDateTime createdAt;
 
     public static SaveHabitResponse from(Habit habit) {
@@ -31,6 +35,7 @@ public class SaveHabitResponse {
                 .category(habit.getCategory())
                 .content(habit.getContent())
                 .image(habit.getImage())
+                .hashtag(Arrays.asList(habit.getHashtags().split(",")))
                 .createdAt(habit.getCreatedDateTime())
                 .build();
     }

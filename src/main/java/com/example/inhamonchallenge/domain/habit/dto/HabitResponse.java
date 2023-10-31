@@ -1,7 +1,7 @@
 package com.example.inhamonchallenge.domain.habit.dto;
 
 import com.example.inhamonchallenge.domain.habit.domain.Habit;
-import com.example.inhamonchallenge.domain.model.Category;
+import com.example.inhamonchallenge.domain.common.Category;
 import lombok.*;
 
 import java.time.LocalDateTime;
