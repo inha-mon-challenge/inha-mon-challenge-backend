@@ -1,14 +1,12 @@
-package com.example.inhamonchallenge.domain.record.domain;
+package com.example.inhamonchallenge.domain.hashtag.domain;
 
 import com.example.inhamonchallenge.domain.habit.domain.Habit;
-import com.example.inhamonchallenge.domain.model.BaseTime;
 import jakarta.persistence.*;
 import lombok.Getter;
 
 @Getter
 @Entity
-@DiscriminatorColumn(name = "RECORD")
-public class Record extends BaseTime {
+public class HashTag {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,11 +16,5 @@ public class Record extends BaseTime {
     @JoinColumn(name = "habit_id")
     private Habit habit;
 
-    private String image;
-
-    private String content;
-
-    private int reportCnt;
-
-    private int likeCnt;
+    private String tag;
 }

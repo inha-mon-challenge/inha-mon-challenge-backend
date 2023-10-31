@@ -8,6 +8,7 @@ import lombok.Getter;
 
 @Getter
 @Entity
+@DiscriminatorColumn(name = "HABIT")
 public class Habit extends BaseTime {
 
     @Id
@@ -32,4 +33,6 @@ public class Habit extends BaseTime {
     private int currentRecordCnt;
 
     private int reportCnt;
+
+    private int likeCnt;
 }
