@@ -1,5 +1,7 @@
 package com.example.inhamonchallenge.domain.record.service;
 
+import com.example.inhamonchallenge.domain.common.exception.DeleteDeniedException;
+import com.example.inhamonchallenge.domain.common.exception.UpdateDeniedException;
 import com.example.inhamonchallenge.domain.habit.domain.Habit;
 import com.example.inhamonchallenge.domain.habit.exception.NotFoundHabitException;
 import com.example.inhamonchallenge.domain.habit.repository.HabitRepository;
@@ -12,6 +14,7 @@ import com.example.inhamonchallenge.domain.record.repository.RecordRepository;
 import com.example.inhamonchallenge.domain.user.domain.User;
 import com.example.inhamonchallenge.domain.user.exception.NotFoundUserException;
 import com.example.inhamonchallenge.domain.user.repository.UserRepository;
+import com.example.inhamonchallenge.global.security.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,4 +44,12 @@ public class RecordService {
     }
 
 
+    public void deleteHabit(Long recordId) {
+        User user = userRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(NotFoundUserException::new);
+        Record record = recordRepository.findById(recordId).orElseThrow(NotFoundRecordException::new);
+        if (record.getUser().getId() != user.getId()) {
+            throw new DeleteDeniedException();
+        }
+        recordRepository.deleteById(recordId);
+    }
 }

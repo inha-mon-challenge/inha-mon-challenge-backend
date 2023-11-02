@@ -21,6 +21,7 @@ public class SaveRecordRequest {
         return Record.builder()
                 .habit(habit)
                 .image(imageUrl)
+                .user(user)
                 .content(request.getContent())
                 .hashtags(String.join(",", request.getHashTag()))
                 .reportCnt(0)

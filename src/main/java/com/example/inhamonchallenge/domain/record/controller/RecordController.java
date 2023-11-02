@@ -28,4 +28,10 @@ public class RecordController {
         SaveRecordResponse response = recordService.addRecord(request, habitId);
         return ResponseEntity.status(CREATED).body(response);
     }
+
+    @DeleteMapping("/records/{recordId}")
+    ResponseEntity<Void> recordDelete(@PathVariable Long recordId){
+        recordService.deleteHabit(recordId);
+        return ResponseEntity.noContent().build();
+    }
 }
