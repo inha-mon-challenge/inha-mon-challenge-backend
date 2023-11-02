@@ -1,13 +1,16 @@
 package com.example.inhamonchallenge.domain.habit.service;
 
+import com.example.inhamonchallenge.domain.common.dto.Result;
 import com.example.inhamonchallenge.domain.common.exception.UpdateDeniedException;
 import com.example.inhamonchallenge.domain.habit.domain.Habit;
+import com.example.inhamonchallenge.domain.habit.dto.HabitAndRecordResponse;
 import com.example.inhamonchallenge.domain.habit.dto.HabitResponse;
 import com.example.inhamonchallenge.domain.habit.dto.SaveHabitRequest;
 import com.example.inhamonchallenge.domain.habit.dto.SaveHabitResponse;
 import com.example.inhamonchallenge.domain.habit.exception.NotFoundHabitException;
 import com.example.inhamonchallenge.domain.habit.repository.HabitRepository;
-import com.example.inhamonchallenge.domain.common.dto.Result;
+import com.example.inhamonchallenge.domain.record.domain.Record;
+import com.example.inhamonchallenge.domain.record.repository.RecordRepository;
 import com.example.inhamonchallenge.domain.user.domain.User;
 import com.example.inhamonchallenge.domain.user.exception.NotFoundUserException;
 import com.example.inhamonchallenge.domain.user.repository.UserRepository;
@@ -16,7 +19,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,10 +32,11 @@ public class HabitService {
 
     private final HabitRepository habitRepository;
     private final UserRepository userRepository;
+    private final RecordRepository recordRepository;
 
     public HabitResponse getHabit(Long habitId) {
         Habit habit = habitRepository.findById(habitId).orElseThrow(NotFoundHabitException::new);
-        return HabitResponse.from(habit, List.of(getHashtagsArray(habit.getHashtags())));
+        return HabitResponse.from(habit);
     }
 
     public SaveHabitResponse addHabit(SaveHabitRequest request) {
@@ -39,31 +46,42 @@ public class HabitService {
         return SaveHabitResponse.from(savedHabit);
     }
 
-    public Result<List<HabitResponse>> getAllHabitsByUserId(Long userId){
+    public Result<List<HabitAndRecordResponse>> getAllHabitsAndRecordsByUserId(Long userId) {
         userRepository.findById(userId).orElseThrow(NotFoundUserException::new);
-        List<Habit> habits = habitRepository.findAllByUserId(userId);
+        List<Object[]> results = habitRepository.findHabitsAndRecordsByUserId(userId);
 
-        List<HabitResponse> habitResponses = habits.stream()
-                .map(habit -> HabitResponse.from(habit, List.of(getHashtagsArray(habit.getHashtags()))))
+        Map<Habit, List<Record>> mp = new HashMap<>();
+        for (Object[] result : results) {
+            Habit habit = (Habit) result[0];
+            Record record = (Record) result[1];
+            if (!mp.containsKey(habit)) {
+                mp.put(habit, new ArrayList<>(List.of(record)));
+            } else {
+                mp.get(habit).add(record);
+            }
+        }
+
+        List<HabitAndRecordResponse> response = mp.entrySet().stream()
+                .map(m -> HabitAndRecordResponse.from(m.getKey(), m.getValue()))
                 .collect(Collectors.toList());
 
-        return new Result<>(habitResponses);
+        return new Result<>(response);
     }
 
-    public SaveHabitResponse updateHabit(SaveHabitRequest request, Long habitId){
+    public SaveHabitResponse updateHabit(SaveHabitRequest request, Long habitId) {
         User user = userRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(NotFoundUserException::new);
         Habit habit = habitRepository.findById(habitId).orElseThrow(NotFoundHabitException::new);
-        if(habit.getUser().getId() != user.getId()){
+        if (habit.getUser().getId() != user.getId()) {
             throw new UpdateDeniedException();
         }
-        habit.updateHabit(request.getContent(), "xxx", request.getCategory(), String.join(",",request.getHashTag()));
+        habit.updateHabit(request.getContent(), "xxx", request.getCategory(), String.join(",", request.getHashTag()));
         return SaveHabitResponse.from(habit);
     }
 
-    public void deleteHabit(Long habitId){
+    public void deleteHabit(Long habitId) {
         User user = userRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(NotFoundUserException::new);
         Habit habit = habitRepository.findById(habitId).orElseThrow(NotFoundHabitException::new);
-        if(habit.getUser().getId() != user.getId()){
+        if (habit.getUser().getId() != user.getId()) {
             throw new UpdateDeniedException();
         }
         habitRepository.deleteById(habitId);
