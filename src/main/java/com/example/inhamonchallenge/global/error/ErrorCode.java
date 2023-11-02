@@ -12,6 +12,8 @@ public enum ErrorCode {
 
     // 습관
     NOT_FOUND_MEMBER_EXCEPTION(404, "습관이 존재하지 않습니다.", NOT_FOUND),
+    //습관기록
+    NOT_FOUND_RECORD_EXCEPTION(404, "습관이 존재하지 않습니다.", NOT_FOUND),
     //유저
     NOT_FOUND_USER_EXCEPTION(404, "사용자가 존재하지 않습니다.", NOT_FOUND),
     //공통

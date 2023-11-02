@@ -22,6 +22,8 @@ public class Record extends BaseTime {
 
     private String content;
 
+    private String hashtags;
+
     private int reportCnt;
 
     private int likeCnt;
