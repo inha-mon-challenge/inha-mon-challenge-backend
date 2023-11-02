@@ -1,13 +1,14 @@
 package com.example.inhamonchallenge.domain.record.controller;
 
 import com.example.inhamonchallenge.domain.record.dto.RecordResponse;
+import com.example.inhamonchallenge.domain.record.dto.SaveRecordRequest;
+import com.example.inhamonchallenge.domain.record.dto.SaveRecordResponse;
 import com.example.inhamonchallenge.domain.record.service.RecordService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import static org.springframework.http.HttpStatus.*;
 
 @RestController
 @RequestMapping("/api")
@@ -20,5 +21,11 @@ public class RecordController {
     ResponseEntity<RecordResponse> recordDetails(@PathVariable Long recordId){
         RecordResponse response = recordService.getRecord(recordId);
         return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/habits/{habitId}/records")
+    ResponseEntity<SaveRecordResponse> recordAdd(@ModelAttribute SaveRecordRequest request, @PathVariable Long habitId){
+        SaveRecordResponse response = recordService.addRecord(request, habitId);
+        return ResponseEntity.status(CREATED).body(response);
     }
 }
