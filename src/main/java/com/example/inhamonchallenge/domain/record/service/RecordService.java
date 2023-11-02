@@ -12,12 +12,11 @@ import com.example.inhamonchallenge.domain.record.repository.RecordRepository;
 import com.example.inhamonchallenge.domain.user.domain.User;
 import com.example.inhamonchallenge.domain.user.exception.NotFoundUserException;
 import com.example.inhamonchallenge.domain.user.repository.UserRepository;
-import com.example.inhamonchallenge.global.security.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import static com.example.inhamonchallenge.global.security.SecurityUtil.*;
+import static com.example.inhamonchallenge.global.security.SecurityUtil.getCurrentMemberId;
 
 @Service
 @Transactional

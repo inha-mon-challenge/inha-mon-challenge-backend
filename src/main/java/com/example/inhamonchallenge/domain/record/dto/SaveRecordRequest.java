@@ -1,6 +1,5 @@
 package com.example.inhamonchallenge.domain.record.dto;
 
-import com.example.inhamonchallenge.domain.common.Category;
 import com.example.inhamonchallenge.domain.habit.domain.Habit;
 import com.example.inhamonchallenge.domain.record.domain.Record;
 import com.example.inhamonchallenge.domain.user.domain.User;

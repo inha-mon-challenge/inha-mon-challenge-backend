@@ -15,7 +15,7 @@ public class ImageRecordResponse {
 
     private LocalDateTime createdAt;
 
-    public static ImageRecordResponse from(Record record){
+    public static ImageRecordResponse from(Record record) {
         return ImageRecordResponse.builder()
                 .image(record.getImage())
                 .createdAt(record.getCreatedDateTime())

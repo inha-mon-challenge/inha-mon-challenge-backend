@@ -23,7 +23,7 @@ public class HabitAndRecordResponse {
     private long dayCount;
     private List<ImageRecordResponse> images;
 
-    public static HabitAndRecordResponse from(Habit habit, List<Record> records){
+    public static HabitAndRecordResponse from(Habit habit, List<Record> records) {
         return HabitAndRecordResponse.builder()
                 .habitId(habit.getId())
                 .category(habit.getCategory())

@@ -57,7 +57,7 @@ public class Habit extends BaseTime {
         this.likeCnt = likeCnt;
     }
 
-    public void updateHabit(String content, String image, String category, String hashtags){
+    public void updateHabit(String content, String image, String category, String hashtags) {
         this.content = content;
         this.image = image;
         this.category = Category.valueOf(category);

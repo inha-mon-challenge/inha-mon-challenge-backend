@@ -6,13 +6,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
-import java.util.Objects;
 
 public interface HabitRepository extends JpaRepository<Habit, Long> {
 
     @Query("SELECT h, r FROM Habit h JOIN FETCH Record r ON h.id = r.habit.id WHERE h.user.id = :userId")
     List<Object[]> findHabitsAndRecordsByUserId(@Param("userId") Long userId);
-
 
 
 }

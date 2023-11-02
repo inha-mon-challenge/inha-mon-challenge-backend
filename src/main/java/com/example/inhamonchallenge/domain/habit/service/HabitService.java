@@ -1,5 +1,6 @@
 package com.example.inhamonchallenge.domain.habit.service;
 
+import com.example.inhamonchallenge.domain.common.dto.Result;
 import com.example.inhamonchallenge.domain.common.exception.UpdateDeniedException;
 import com.example.inhamonchallenge.domain.habit.domain.Habit;
 import com.example.inhamonchallenge.domain.habit.dto.HabitAndRecordResponse;
@@ -8,7 +9,6 @@ import com.example.inhamonchallenge.domain.habit.dto.SaveHabitRequest;
 import com.example.inhamonchallenge.domain.habit.dto.SaveHabitResponse;
 import com.example.inhamonchallenge.domain.habit.exception.NotFoundHabitException;
 import com.example.inhamonchallenge.domain.habit.repository.HabitRepository;
-import com.example.inhamonchallenge.domain.common.dto.Result;
 import com.example.inhamonchallenge.domain.record.domain.Record;
 import com.example.inhamonchallenge.domain.record.repository.RecordRepository;
 import com.example.inhamonchallenge.domain.user.domain.User;

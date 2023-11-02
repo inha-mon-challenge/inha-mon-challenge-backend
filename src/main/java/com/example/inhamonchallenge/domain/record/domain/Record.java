@@ -1,9 +1,7 @@
 package com.example.inhamonchallenge.domain.record.domain;
 
-import com.example.inhamonchallenge.domain.common.Category;
-import com.example.inhamonchallenge.domain.habit.domain.Habit;
 import com.example.inhamonchallenge.domain.common.BaseTime;
-import com.example.inhamonchallenge.domain.user.domain.User;
+import com.example.inhamonchallenge.domain.habit.domain.Habit;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
