@@ -1,5 +1,6 @@
 package com.example.inhamonchallenge.domain.habit.controller;
 
+import com.example.inhamonchallenge.domain.habit.dto.HabitAndRecordResponse;
 import com.example.inhamonchallenge.domain.habit.dto.HabitResponse;
 import com.example.inhamonchallenge.domain.habit.dto.SaveHabitRequest;
 import com.example.inhamonchallenge.domain.habit.dto.SaveHabitResponse;
@@ -25,16 +26,16 @@ public class HabitController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("/users/{userId}/habits")
+    ResponseEntity<Result<List<HabitAndRecordResponse>>> habitList(@PathVariable Long userId) {
+        Result<List<HabitAndRecordResponse>> response = habitService.getAllHabitsAndRecordsByUserId(userId);
+        return ResponseEntity.ok(response);
+    }
+
     @PostMapping("/habits")
     ResponseEntity<SaveHabitResponse> habitAdd(@ModelAttribute SaveHabitRequest request) {
         SaveHabitResponse response = habitService.addHabit(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
-    }
-
-    @GetMapping("/users/{userId}/habits")
-    ResponseEntity<Result<List<HabitResponse>>> habitList(@PathVariable Long userId) {
-        Result<List<HabitResponse>> habitList = habitService.getAllHabitsByUserId(userId);
-        return ResponseEntity.ok(habitList);
     }
 
     @PutMapping("/habits/{habitId}")
