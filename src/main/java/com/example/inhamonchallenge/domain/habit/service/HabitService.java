@@ -29,7 +29,7 @@ public class HabitService {
 
     public HabitResponse getHabit(Long habitId) {
         Habit habit = habitRepository.findById(habitId).orElseThrow(NotFoundHabitException::new);
-        return HabitResponse.from(habit, List.of(getHashtagsArray(habit.getHashtags())));
+        return HabitResponse.from(habit);
     }
 
     public SaveHabitResponse addHabit(SaveHabitRequest request) {
@@ -44,7 +44,7 @@ public class HabitService {
         List<Habit> habits = habitRepository.findAllByUserId(userId);
 
         List<HabitResponse> habitResponses = habits.stream()
-                .map(habit -> HabitResponse.from(habit, List.of(getHashtagsArray(habit.getHashtags()))))
+                .map(habit -> HabitResponse.from(habit))
                 .collect(Collectors.toList());
 
         return new Result<>(habitResponses);

@@ -5,6 +5,7 @@ import com.example.inhamonchallenge.domain.common.Category;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 
 @Getter
@@ -35,7 +36,7 @@ public class HabitResponse {
 
     private LocalDateTime createdAt;
 
-    public static HabitResponse from(Habit habit, List<String> hashtag) {
+    public static HabitResponse from(Habit habit) {
         return HabitResponse.builder()
                 .habitId(habit.getId())
                 .username(habit.getUser().getName())
@@ -45,7 +46,7 @@ public class HabitResponse {
                 .totalRecordCnt(habit.getTotalRecordCnt())
                 .photoRecordCnt(habit.getPhotoRecordCnt())
                 .currentRecordCnt(habit.getCurrentRecordCnt())
-                .hashtag(hashtag)
+                .hashtag(Arrays.asList(habit.getHashtags().split(",")))
                 .like(habit.getLikeCnt())
                 .createdAt(habit.getCreatedDateTime())
                 .build();
