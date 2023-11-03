@@ -21,7 +21,8 @@ public enum ErrorCode {
     NOT_FOUND_COMMENT_EXCEPTION(404, "존재하지 않는 댓글입니다.", NOT_FOUND),
     //공통
     UPDATE_DENIED_EXCEPTION(403, "수정 권한이 없습니다.", FORBIDDEN),
-    DELETE_DENIED_EXCEPTION(403, "삭제 권한이 없습니다.", FORBIDDEN);
+    DELETE_DENIED_EXCEPTION(403, "삭제 권한이 없습니다.", FORBIDDEN),
+    NOT_FOUND_FEED_EXCEPTION(404, "존재하지 않는 피드입니다.", NOT_FOUND);
     private final int status;
     private final String message;
     private final HttpStatus httpStatus;
