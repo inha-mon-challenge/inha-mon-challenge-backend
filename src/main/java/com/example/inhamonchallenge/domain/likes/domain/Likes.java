@@ -1,6 +1,5 @@
-package com.example.inhamonchallenge.domain.comment.domain;
+package com.example.inhamonchallenge.domain.likes.domain;
 
-import com.example.inhamonchallenge.domain.common.BaseTime;
 import com.example.inhamonchallenge.domain.common.FeedType;
 import com.example.inhamonchallenge.domain.user.domain.User;
 import jakarta.persistence.*;
@@ -12,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Comment extends BaseTime {
+public class Likes {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,24 +23,14 @@ public class Comment extends BaseTime {
 
     private Long feedId;
 
-    private String content;
-
     @Enumerated(EnumType.STRING)
     private FeedType feedType;
 
-    private int reportCnt;
-
     @Builder
-    public Comment(Long id, User user, Long feedId, String content, FeedType feedType, int reportCnt) {
+    public Likes(Long id, User user, Long feedId, FeedType feedType) {
         this.id = id;
         this.user = user;
         this.feedId = feedId;
-        this.content = content;
         this.feedType = feedType;
-        this.reportCnt = reportCnt;
-    }
-
-    public void update(String content) {
-        this.content = content;
     }
 }

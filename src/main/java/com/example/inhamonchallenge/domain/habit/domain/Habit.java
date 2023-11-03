@@ -4,14 +4,14 @@ import com.example.inhamonchallenge.domain.common.BaseTime;
 import com.example.inhamonchallenge.domain.common.Category;
 import com.example.inhamonchallenge.domain.user.domain.User;
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
 @Entity
-@DiscriminatorColumn(name = "HABIT")
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Habit extends BaseTime {
 
     @Id
