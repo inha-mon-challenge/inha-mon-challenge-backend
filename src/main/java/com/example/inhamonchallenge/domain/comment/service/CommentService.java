@@ -4,6 +4,7 @@ import com.example.inhamonchallenge.domain.comment.domain.Comment;
 import com.example.inhamonchallenge.domain.comment.dto.CommentResponse;
 import com.example.inhamonchallenge.domain.comment.dto.SaveCommentRequest;
 import com.example.inhamonchallenge.domain.comment.dto.SaveCommentResponse;
+import com.example.inhamonchallenge.domain.comment.dto.UpdateCommentRequest;
 import com.example.inhamonchallenge.domain.comment.exception.NotFoundCommentException;
 import com.example.inhamonchallenge.domain.comment.repository.CommentRepository;
 import com.example.inhamonchallenge.domain.common.FeedType;
@@ -42,5 +43,15 @@ public class CommentService {
         List<CommentResponse> response = comments.stream().map(comment -> CommentResponse.from(comment))
                 .collect(Collectors.toList());
         return new Result<>(response);
+    }
+
+    public SaveCommentResponse updateComment(Long commentId, UpdateCommentRequest request) {
+        User user = userRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(NotFoundUserException::new);
+        Comment comment = commentRepository.findById(commentId).orElseThrow(NotFoundCommentException::new);
+        if(user.getId() != comment.getUser().getId()) {
+            throw new NotFoundCommentException();
+        }
+        comment.update(request.getContent());
+        return SaveCommentResponse.from(comment);
     }
 }

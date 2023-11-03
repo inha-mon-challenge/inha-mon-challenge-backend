@@ -39,4 +39,8 @@ public class Comment extends BaseTime {
         this.feedType = feedType;
         this.reportCnt = reportCnt;
     }
+
+    public void update(String content) {
+        this.content = content;
+    }
 }

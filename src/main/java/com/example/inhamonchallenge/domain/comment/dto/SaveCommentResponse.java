@@ -13,6 +13,7 @@ public class SaveCommentResponse {
 
     private Long commentId;
     private Long userId;
+    private String username;
     private String content;
     private LocalDateTime createdAt;
 
@@ -20,6 +21,7 @@ public class SaveCommentResponse {
         return SaveCommentResponse.builder()
                 .commentId(comment.getId())
                 .userId(comment.getUser().getId())
+                .username(comment.getUser().getName())
                 .content(comment.getContent())
                 .createdAt(comment.getCreatedDateTime())
                 .build();
