@@ -20,6 +20,7 @@ public enum ErrorCode {
     //댓글
     NOT_FOUND_COMMENT_EXCEPTION(404, "존재하지 않는 댓글입니다.", NOT_FOUND),
     //종아요
+    ExistsLikeException(409, "이미 좋아요를 누른 피드입니다.", HttpStatus.CONFLICT),
     NOT_FOUND_LIKES_EXCEPTION(404, "존재하지 않는 좋아요입니다.", NOT_FOUND),
     //공통
     UPDATE_DENIED_EXCEPTION(403, "수정 권한이 없습니다.", FORBIDDEN),

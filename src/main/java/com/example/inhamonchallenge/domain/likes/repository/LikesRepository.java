@@ -24,4 +24,6 @@ public interface LikesRepository extends JpaRepository<Likes, Long> {
     @Modifying
     @Query("UPDATE Record r SET r.likeCnt = r.likeCnt - 1 WHERE r.id = :feedId")
     int decreaseRecordLikes(@Param("feedId") Long feedId);
+
+    boolean existsByFeedIdAndFeedTypeAndUserId(Long feedId, FeedType feedType, Long userId);
 }

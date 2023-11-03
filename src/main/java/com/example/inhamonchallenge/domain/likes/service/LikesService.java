@@ -5,6 +5,7 @@ import com.example.inhamonchallenge.domain.common.exception.NotFoundFeedExceptio
 import com.example.inhamonchallenge.domain.habit.repository.HabitRepository;
 import com.example.inhamonchallenge.domain.likes.domain.Likes;
 import com.example.inhamonchallenge.domain.likes.dto.LikesRequest;
+import com.example.inhamonchallenge.domain.likes.exception.ExistsLikeException;
 import com.example.inhamonchallenge.domain.likes.exception.NotFoundLikesException;
 import com.example.inhamonchallenge.domain.likes.repository.LikesRepository;
 import com.example.inhamonchallenge.domain.record.repository.RecordRepository;
@@ -31,6 +32,10 @@ public class LikesService {
         if (!isValidFeed(request.getFeedType(), request.getFeedId())) {
             throw new NotFoundFeedException();
         }
+        if(likesRepository.existsByFeedIdAndFeedTypeAndUserId(request.getFeedId(), request.getFeedType(), user.getId())){
+            throw new ExistsLikeException();
+        }
+        updateLikeCnt(request.getFeedType(), request.getFeedId(), true);
         likesRepository.save(request.toEntity(request, user));
     }
 
