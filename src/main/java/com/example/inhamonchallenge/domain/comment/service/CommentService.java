@@ -9,6 +9,8 @@ import com.example.inhamonchallenge.domain.comment.exception.NotFoundCommentExce
 import com.example.inhamonchallenge.domain.comment.repository.CommentRepository;
 import com.example.inhamonchallenge.domain.common.FeedType;
 import com.example.inhamonchallenge.domain.common.dto.Result;
+import com.example.inhamonchallenge.domain.common.exception.DeleteDeniedException;
+import com.example.inhamonchallenge.domain.common.exception.UpdateDeniedException;
 import com.example.inhamonchallenge.domain.user.domain.User;
 import com.example.inhamonchallenge.domain.user.exception.NotFoundUserException;
 import com.example.inhamonchallenge.domain.user.repository.UserRepository;
@@ -49,9 +51,18 @@ public class CommentService {
         User user = userRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(NotFoundUserException::new);
         Comment comment = commentRepository.findById(commentId).orElseThrow(NotFoundCommentException::new);
         if(user.getId() != comment.getUser().getId()) {
-            throw new NotFoundCommentException();
+            throw new UpdateDeniedException();
         }
         comment.update(request.getContent());
         return SaveCommentResponse.from(comment);
+    }
+
+    public void deleteComment(Long commentId) {
+        User user = userRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(NotFoundUserException::new);
+        Comment comment = commentRepository.findById(commentId).orElseThrow(NotFoundCommentException::new);
+        if(user.getId() != comment.getUser().getId()) {
+            throw new DeleteDeniedException();
+        }
+        commentRepository.delete(comment);
     }
 }

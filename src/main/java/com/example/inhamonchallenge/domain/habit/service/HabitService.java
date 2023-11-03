@@ -1,6 +1,7 @@
 package com.example.inhamonchallenge.domain.habit.service;
 
 import com.example.inhamonchallenge.domain.common.dto.Result;
+import com.example.inhamonchallenge.domain.common.exception.DeleteDeniedException;
 import com.example.inhamonchallenge.domain.common.exception.UpdateDeniedException;
 import com.example.inhamonchallenge.domain.habit.domain.Habit;
 import com.example.inhamonchallenge.domain.habit.dto.HabitAndRecordResponse;
@@ -82,7 +83,7 @@ public class HabitService {
         User user = userRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(NotFoundUserException::new);
         Habit habit = habitRepository.findById(habitId).orElseThrow(NotFoundHabitException::new);
         if (habit.getUser().getId() != user.getId()) {
-            throw new UpdateDeniedException();
+            throw new DeleteDeniedException();
         }
         habitRepository.deleteById(habitId);
     }
