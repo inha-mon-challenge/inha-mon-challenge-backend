@@ -2,10 +2,7 @@ package com.example.inhamonchallenge.domain.comment.domain;
 
 import com.example.inhamonchallenge.domain.common.BaseTime;
 import com.example.inhamonchallenge.domain.common.FeedType;
-import com.example.inhamonchallenge.domain.habit.domain.Habit;
-import com.example.inhamonchallenge.domain.record.domain.Record;
 import com.example.inhamonchallenge.domain.user.domain.User;
-import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;

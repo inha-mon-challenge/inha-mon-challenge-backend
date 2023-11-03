@@ -2,8 +2,6 @@ package com.example.inhamonchallenge.domain.comment.dto;
 
 import com.example.inhamonchallenge.domain.comment.domain.Comment;
 import com.example.inhamonchallenge.domain.common.FeedType;
-import com.example.inhamonchallenge.domain.habit.domain.Habit;
-import com.example.inhamonchallenge.domain.record.domain.Record;
 import com.example.inhamonchallenge.domain.user.domain.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
