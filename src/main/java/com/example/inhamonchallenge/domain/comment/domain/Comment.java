@@ -24,13 +24,7 @@ public class Comment extends BaseTime {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "habit_id")
-    private Habit habit;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "record_id")
-    private Record record;
+    private Long feedId;
 
     private String content;
 
@@ -40,12 +34,10 @@ public class Comment extends BaseTime {
     private int reportCnt;
 
     @Builder
-    public Comment(Long id, User user, Habit habit, Record record,
-                   String content, FeedType feedType, int reportCnt) {
+    public Comment(Long id, User user, Long feedId, String content, FeedType feedType, int reportCnt) {
         this.id = id;
         this.user = user;
-        this.habit = habit;
-        this.record = record;
+        this.feedId = feedId;
         this.content = content;
         this.feedType = feedType;
         this.reportCnt = reportCnt;

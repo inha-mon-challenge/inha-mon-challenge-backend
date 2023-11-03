@@ -20,11 +20,10 @@ public class SaveCommentRequest {
 
     private Long feedId;
 
-    public static Comment toEntity(SaveCommentRequest request, User user, Habit habit, Record record) {
+    public static Comment toEntity(SaveCommentRequest request, User user) {
         return Comment.builder()
                 .user(user)
-                .habit(habit)
-                .record(record)
+                .feedId(request.getFeedId())
                 .content(request.getContent())
                 .feedType(request.getFeedType())
                 .reportCnt(0)
