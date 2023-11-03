@@ -11,12 +11,12 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class SaveLikesRequest {
+public class LikesRequest {
 
     private Long feedId;
     private FeedType feedType;
 
-    public static Likes toEntity(SaveLikesRequest request, User user) {
+    public static Likes toEntity(LikesRequest request, User user) {
         return Likes.builder()
                 .user(user)
                 .feedId(request.getFeedId())

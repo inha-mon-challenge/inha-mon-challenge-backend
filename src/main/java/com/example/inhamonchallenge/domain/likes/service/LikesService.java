@@ -3,7 +3,9 @@ package com.example.inhamonchallenge.domain.likes.service;
 import com.example.inhamonchallenge.domain.common.FeedType;
 import com.example.inhamonchallenge.domain.common.exception.NotFoundFeedException;
 import com.example.inhamonchallenge.domain.habit.repository.HabitRepository;
-import com.example.inhamonchallenge.domain.likes.dto.SaveLikesRequest;
+import com.example.inhamonchallenge.domain.likes.domain.Likes;
+import com.example.inhamonchallenge.domain.likes.dto.LikesRequest;
+import com.example.inhamonchallenge.domain.likes.exception.NotFoundLikesException;
 import com.example.inhamonchallenge.domain.likes.repository.LikesRepository;
 import com.example.inhamonchallenge.domain.record.repository.RecordRepository;
 import com.example.inhamonchallenge.domain.user.domain.User;
@@ -24,12 +26,35 @@ public class LikesService {
     private final HabitRepository habitRepository;
     private final RecordRepository recordRepository;
 
-    public void addLikes(SaveLikesRequest request) {
+    public void addLikes(LikesRequest request) {
         User user = userRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(NotFoundUserException::new);
         if (!isValidFeed(request.getFeedType(), request.getFeedId())) {
             throw new NotFoundFeedException();
         }
         likesRepository.save(request.toEntity(request, user));
+    }
+
+    public void deleteLikes(LikesRequest request, Long likesId){
+        User user = userRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(NotFoundUserException::new);
+        if (!isValidFeed(request.getFeedType(), request.getFeedId())) {
+            throw new NotFoundFeedException();
+        }
+        Likes likes = likesRepository.findById(likesId).orElseThrow(NotFoundLikesException::new);
+        updateLikeCnt(request.getFeedType(), request.getFeedId(), false);
+        likesRepository.delete(likes);
+    }
+
+    private void updateLikeCnt(FeedType feedType, Long feedId, boolean isIncrease) {
+        if (feedType == FeedType.HABIT && isIncrease) {
+            likesRepository.increaseHabitLikes(feedId);
+        } else if (feedType == FeedType.RECORD && isIncrease) {
+            likesRepository.increaseRecordLikes(feedId);
+        }
+        else if (feedType == FeedType.HABIT && !isIncrease) {
+            likesRepository.decreaseHabitLikes(feedId);
+        } else if (feedType == FeedType.RECORD && !isIncrease) {
+            likesRepository.decreaseRecordLikes(feedId);
+        }
     }
 
     private boolean isValidFeed(FeedType feedType, Long feedId) {
