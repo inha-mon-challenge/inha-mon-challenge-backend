@@ -1,5 +1,6 @@
 package com.example.inhamonchallenge.domain.comment.controller;
 
+import com.example.inhamonchallenge.domain.comment.dto.CommentResponse;
 import com.example.inhamonchallenge.domain.comment.dto.SaveCommentRequest;
 import com.example.inhamonchallenge.domain.comment.dto.SaveCommentResponse;
 import com.example.inhamonchallenge.domain.comment.service.CommentService;
@@ -22,5 +23,9 @@ public class CommentController {
         return ResponseEntity.status(CREATED).body(commentService.addComment(request));
     }
 
+    @GetMapping("/{commentId}")
+    ResponseEntity<CommentResponse> CommentDetails(@PathVariable Long commentId) {
+        return ResponseEntity.ok(commentService.getComment(commentId));
+    }
 
 }

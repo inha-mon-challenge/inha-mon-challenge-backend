@@ -1,8 +1,10 @@
 package com.example.inhamonchallenge.domain.comment.service;
 
 import com.example.inhamonchallenge.domain.comment.domain.Comment;
+import com.example.inhamonchallenge.domain.comment.dto.CommentResponse;
 import com.example.inhamonchallenge.domain.comment.dto.SaveCommentRequest;
 import com.example.inhamonchallenge.domain.comment.dto.SaveCommentResponse;
+import com.example.inhamonchallenge.domain.comment.exception.NotFoundCommentException;
 import com.example.inhamonchallenge.domain.comment.repository.CommentRepository;
 import com.example.inhamonchallenge.domain.common.FeedType;
 import com.example.inhamonchallenge.domain.habit.domain.Habit;
@@ -42,5 +44,10 @@ public class CommentService {
         } else {
             throw new IllegalArgumentException("FeedType is not valid");
         }
+    }
+
+    public CommentResponse getComment(Long commentId) {
+        Comment comment = commentRepository.findById(commentId).orElseThrow(NotFoundCommentException::new);
+        return CommentResponse.from(comment);
     }
 }
