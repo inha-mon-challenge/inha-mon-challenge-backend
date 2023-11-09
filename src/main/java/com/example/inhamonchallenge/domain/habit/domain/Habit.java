@@ -25,9 +25,9 @@ public class Habit extends BaseTime {
     @Enumerated(EnumType.STRING)
     private Category category;
 
-    private String content;
+    private String title;
 
-    private String image;
+    private String content;
 
     private String hashtags;
 
@@ -42,13 +42,13 @@ public class Habit extends BaseTime {
     private int likeCnt;
 
     @Builder
-    public Habit(Long id, User user, Category category, String content, String image, String hashtags,
+    public Habit(Long id, User user, Category category, String content, String title, String hashtags,
                  int totalRecordCnt, int photoRecordCnt, int currentRecordCnt, int reportCnt, int likeCnt) {
         this.id = id;
         this.user = user;
         this.category = category;
         this.content = content;
-        this.image = image;
+        this.title = title;
         this.hashtags = hashtags;
         this.totalRecordCnt = totalRecordCnt;
         this.photoRecordCnt = photoRecordCnt;
@@ -57,9 +57,9 @@ public class Habit extends BaseTime {
         this.likeCnt = likeCnt;
     }
 
-    public void updateHabit(String content, String image, String category, String hashtags) {
+    public void updateHabit(String content, String title, String category, String hashtags) {
         this.content = content;
-        this.image = image;
+        this.title = title;
         this.category = Category.valueOf(category);
         this.hashtags = hashtags;
     }

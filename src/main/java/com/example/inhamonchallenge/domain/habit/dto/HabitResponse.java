@@ -20,9 +20,9 @@ public class HabitResponse {
 
     private Category category;
 
-    private String content;
+    private String title;
 
-    private String image;
+    private String content;
 
     private int totalRecordCnt;
 
@@ -42,7 +42,7 @@ public class HabitResponse {
                 .username(habit.getUser().getName())
                 .category(habit.getCategory())
                 .content(habit.getContent())
-                .image(habit.getImage())
+                .title(habit.getTitle())
                 .totalRecordCnt(habit.getTotalRecordCnt())
                 .photoRecordCnt(habit.getPhotoRecordCnt())
                 .currentRecordCnt(habit.getCurrentRecordCnt())

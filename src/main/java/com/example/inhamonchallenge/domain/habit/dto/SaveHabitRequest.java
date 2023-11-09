@@ -13,17 +13,17 @@ import java.util.List;
 @AllArgsConstructor
 public class SaveHabitRequest {
 
+    private String title;
     private String content;
-    private MultipartFile image;
     private String category;
     private List<String> hashTag;
 
-    public static Habit toEntity(SaveHabitRequest request, User user, String imageUrl) {
+    public static Habit toEntity(SaveHabitRequest request, User user) {
         return Habit.builder()
                 .user(user)
                 .category(Category.valueOf(request.getCategory()))
                 .content(request.getContent())
-                .image(imageUrl)
+                .title(request.getTitle())
                 .hashtags(String.join(",", request.getHashTag()))
                 .totalRecordCnt(0)
                 .photoRecordCnt(0)

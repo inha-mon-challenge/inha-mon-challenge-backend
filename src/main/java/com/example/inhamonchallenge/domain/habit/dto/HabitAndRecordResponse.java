@@ -19,6 +19,7 @@ public class HabitAndRecordResponse {
 
     private Long habitId;
     private Category category;
+    private String title;
     private String content;
     private long dayCount;
     private List<ImageRecordResponse> images;
@@ -27,6 +28,7 @@ public class HabitAndRecordResponse {
         return HabitAndRecordResponse.builder()
                 .habitId(habit.getId())
                 .category(habit.getCategory())
+                .title(habit.getTitle())
                 .content(habit.getContent())
                 .dayCount(Duration.between(habit.getCreatedDateTime(), LocalDateTime.now()).toDays() + 1)
                 .images(records.stream().map(record -> ImageRecordResponse.from(record)).collect(Collectors.toList()))

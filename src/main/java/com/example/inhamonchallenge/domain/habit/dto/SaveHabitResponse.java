@@ -20,9 +20,9 @@ public class SaveHabitResponse {
 
     private Category category;
 
-    private String content;
+    private String title;
 
-    private String image;
+    private String content;
 
     private List<String> hashtag;
 
@@ -34,7 +34,7 @@ public class SaveHabitResponse {
                 .username(habit.getUser().getName())
                 .category(habit.getCategory())
                 .content(habit.getContent())
-                .image(habit.getImage())
+                .title(habit.getTitle())
                 .hashtag(Arrays.asList(habit.getHashtags().split(",")))
                 .createdAt(habit.getCreatedDateTime())
                 .build();

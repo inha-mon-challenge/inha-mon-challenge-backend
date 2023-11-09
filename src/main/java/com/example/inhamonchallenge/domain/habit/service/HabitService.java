@@ -33,7 +33,6 @@ public class HabitService {
 
     private final HabitRepository habitRepository;
     private final UserRepository userRepository;
-    private final RecordRepository recordRepository;
 
     public HabitResponse getHabit(Long habitId) {
         Habit habit = habitRepository.findById(habitId).orElseThrow(NotFoundHabitException::new);
@@ -42,7 +41,7 @@ public class HabitService {
 
     public SaveHabitResponse addHabit(SaveHabitRequest request) {
         User user = userRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(NotFoundUserException::new);
-        Habit habit = SaveHabitRequest.toEntity(request, user, "xxx");
+        Habit habit = SaveHabitRequest.toEntity(request, user);
         Habit savedHabit = habitRepository.save(habit);
         return SaveHabitResponse.from(savedHabit);
     }
