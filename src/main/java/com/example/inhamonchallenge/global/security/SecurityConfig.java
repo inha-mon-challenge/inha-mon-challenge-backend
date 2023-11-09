@@ -52,6 +52,7 @@ public class SecurityConfig {
                 .sessionManagement((s) -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .headers((e) -> e.frameOptions((a) -> a.sameOrigin()))
                 .authorizeHttpRequests(request -> request
+                        .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/**").authenticated()
                         .requestMatchers(HttpMethod.OPTIONS, "/**/*").permitAll()
                         .anyRequest().permitAll())

@@ -17,6 +17,7 @@ public enum ErrorCode {
     NOT_FOUND_RECORD_EXCEPTION(404, "존재하지 않는 습관 기록입니다.", NOT_FOUND),
     //유저
     NOT_FOUND_USER_EXCEPTION(404, "존재하지 않는 사용자입니다.", NOT_FOUND),
+    EXIST_EMAIL_EXCEPTION(409, "이미 존재하는 이메일입니다.", HttpStatus.CONFLICT),
     //댓글
     NOT_FOUND_COMMENT_EXCEPTION(404, "존재하지 않는 댓글입니다.", NOT_FOUND),
     //종아요
