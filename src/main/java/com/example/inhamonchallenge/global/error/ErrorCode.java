@@ -26,7 +26,9 @@ public enum ErrorCode {
     //메일
     UNABLE_TO_SEND_EMAIL(500, "이메일을 발송할 수 없습니다.", HttpStatus.INTERNAL_SERVER_ERROR),
     //인증
-    INVALID_LOGIN_EXCEPTION(401, "로그인 정보가 올바르지 않습니다.", HttpStatus.UNAUTHORIZED),
+    WRONG_EMAIL_EXCEPTION(401, "이메일이 올바르지 않습니다.", HttpStatus.UNAUTHORIZED),
+    WRONG_PASSWORD_EXCEPTION(401, "비밀번호가 올바르지 않습니다.", HttpStatus.UNAUTHORIZED),
+    INVALID_ACCESS_TOKEN_EXCEPTION(401, "액세스 토큰이 올바르지 않습니다.", HttpStatus.UNAUTHORIZED),
     INVALID_REFRESH_TOKEN_EXCEPTION(401, "리프레시 토큰이 올바르지 않습니다.", HttpStatus.UNAUTHORIZED),
     LOGOUT_USER_EXCEPTION(401, "로그아웃 한 유저입니다.", HttpStatus.UNAUTHORIZED),
     //공통

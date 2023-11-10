@@ -5,6 +5,7 @@ import com.example.inhamonchallenge.domain.auth.dto.LoginRequest;
 import com.example.inhamonchallenge.domain.auth.dto.SignupRequest;
 import com.example.inhamonchallenge.domain.auth.dto.SignupResponse;
 import com.example.inhamonchallenge.domain.auth.dto.TokenRequest;
+import com.example.inhamonchallenge.domain.auth.exception.InvalidAccessTokenException;
 import com.example.inhamonchallenge.domain.auth.exception.InvalidRefreshTokenException;
 import com.example.inhamonchallenge.domain.auth.exception.LogoutUserException;
 import com.example.inhamonchallenge.domain.auth.repository.RefreshTokenRepository;
@@ -79,5 +80,20 @@ public class AuthService {
         refreshToken.updateValue(tokenDto.getRefreshToken());
 
         return tokenDto;
+    }
+
+    public void logout(TokenRequest request) {
+        if (!tokenProvider.validateToken(request.getRefreshToken())) {
+            throw new InvalidRefreshTokenException();
+        }
+
+        Authentication authentication = tokenProvider.getAuthentication(request.getAccessToken());
+
+        RefreshToken refreshToken = refreshTokenRepository.findByKey(authentication.getName())
+                .orElseThrow(LogoutUserException::new);
+
+
+
+        refreshTokenRepository.deleteByKey(authentication.getName());
     }
 }

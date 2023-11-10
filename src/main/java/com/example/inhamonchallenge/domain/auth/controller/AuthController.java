@@ -37,4 +37,10 @@ public class AuthController {
     public ResponseEntity<TokenDto> reissue(@RequestBody TokenRequest tokenRequestDto) {
         return ResponseEntity.ok(authService.reissue(tokenRequestDto));
     }
+
+    @PostMapping("/logout")
+    public ResponseEntity<Void> logout(@RequestBody TokenRequest tokenRequestDto) {
+        authService.logout(tokenRequestDto);
+        return ResponseEntity.status(OK).build();
+    }
 }
