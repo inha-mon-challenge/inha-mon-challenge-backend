@@ -3,6 +3,7 @@ package com.example.inhamonchallenge.domain.auth.controller;
 import com.example.inhamonchallenge.domain.auth.dto.LoginRequest;
 import com.example.inhamonchallenge.domain.auth.dto.SignupRequest;
 import com.example.inhamonchallenge.domain.auth.dto.SignupResponse;
+import com.example.inhamonchallenge.domain.auth.dto.TokenRequest;
 import com.example.inhamonchallenge.domain.auth.service.AuthService;
 import com.example.inhamonchallenge.global.jwt.TokenDto;
 import jakarta.validation.Valid;
@@ -30,5 +31,10 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<TokenDto> login(@RequestBody LoginRequest request) {
         return ResponseEntity.ok(authService.login(request));
+    }
+
+    @PostMapping("/reissue")
+    public ResponseEntity<TokenDto> reissue(@RequestBody TokenRequest tokenRequestDto) {
+        return ResponseEntity.ok(authService.reissue(tokenRequestDto));
     }
 }

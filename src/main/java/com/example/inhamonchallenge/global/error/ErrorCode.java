@@ -25,6 +25,10 @@ public enum ErrorCode {
     NOT_FOUND_LIKES_EXCEPTION(404, "존재하지 않는 좋아요입니다.", NOT_FOUND),
     //메일
     UNABLE_TO_SEND_EMAIL(500, "이메일을 발송할 수 없습니다.", HttpStatus.INTERNAL_SERVER_ERROR),
+    //인증
+    INVALID_LOGIN_EXCEPTION(401, "로그인 정보가 올바르지 않습니다.", HttpStatus.UNAUTHORIZED),
+    INVALID_REFRESH_TOKEN_EXCEPTION(401, "리프레시 토큰이 올바르지 않습니다.", HttpStatus.UNAUTHORIZED),
+    LOGOUT_USER_EXCEPTION(401, "로그아웃 한 유저입니다.", HttpStatus.UNAUTHORIZED),
     //공통
     UPDATE_DENIED_EXCEPTION(403, "수정 권한이 없습니다.", FORBIDDEN),
     DELETE_DENIED_EXCEPTION(403, "삭제 권한이 없습니다.", FORBIDDEN),
