@@ -1,6 +1,7 @@
 package com.example.inhamonchallenge.domain.auth.dto;
 
 import com.example.inhamonchallenge.domain.common.Gender;
+import com.example.inhamonchallenge.domain.common.Role;
 import com.example.inhamonchallenge.domain.user.domain.User;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -37,6 +38,7 @@ public class SignupRequest {
                 .name(name)
                 .birth(birth)
                 .gender(gender)
+                .role(Role.ROLE_USER)
                 .build();
     }
 }

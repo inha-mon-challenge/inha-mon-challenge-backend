@@ -1,8 +1,10 @@
 package com.example.inhamonchallenge.domain.auth.controller;
 
+import com.example.inhamonchallenge.domain.auth.dto.LoginRequest;
 import com.example.inhamonchallenge.domain.auth.dto.SignupRequest;
 import com.example.inhamonchallenge.domain.auth.dto.SignupResponse;
 import com.example.inhamonchallenge.domain.auth.service.AuthService;
+import com.example.inhamonchallenge.global.jwt.TokenDto;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -23,5 +25,10 @@ public class AuthController {
     @PostMapping("/signup")
     public ResponseEntity<SignupResponse> signup(@Valid @RequestBody SignupRequest request) {
         return ResponseEntity.status(CREATED).body(authService.signup(request));
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<TokenDto> login(@RequestBody LoginRequest request) {
+        return ResponseEntity.ok(authService.login(request));
     }
 }
