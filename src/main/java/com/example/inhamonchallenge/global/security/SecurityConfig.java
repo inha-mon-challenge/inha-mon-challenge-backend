@@ -53,6 +53,7 @@ public class SecurityConfig {
                 .headers((e) -> e.frameOptions((a) -> a.sameOrigin()))
                 .authorizeHttpRequests(request -> request
                         .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers("/api/mails/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/**").authenticated()
                         .requestMatchers(HttpMethod.OPTIONS, "/**/*").permitAll()
                         .anyRequest().permitAll())

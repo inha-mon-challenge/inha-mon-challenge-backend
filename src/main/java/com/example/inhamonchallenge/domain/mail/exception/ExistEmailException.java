@@ -1,4 +1,4 @@
-package com.example.inhamonchallenge.domain.user.exception;
+package com.example.inhamonchallenge.domain.mail.exception;
 
 import com.example.inhamonchallenge.global.error.BusinessException;
 import com.example.inhamonchallenge.global.error.ErrorCode;
