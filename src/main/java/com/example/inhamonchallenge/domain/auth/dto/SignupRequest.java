@@ -18,8 +18,9 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class SignupRequest {
     @NotBlank(message = "이메일 입력은 필수입니다.")
-    @Pattern(regexp = "^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$", message = "잘못된 형식입니다.")
+    @Pattern(regexp = "^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@(inha.edu|inha.ac.kr)$", message = "잘못된 형식이거나 허용되지 않는 도메인입니다.")
     private String email;
+
 
     @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*()_+=-])[a-zA-Z0-9!@#$%^&*()_+=-]{8,}$", message = "비밀번호는 8자 이상, 영문, 숫자, 특수문자를 포함해야 합니다.")
     private String password;
