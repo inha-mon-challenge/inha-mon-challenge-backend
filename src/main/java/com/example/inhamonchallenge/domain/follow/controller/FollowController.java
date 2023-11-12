@@ -24,6 +24,11 @@ public class FollowController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("/{userId}/follower")
+    public ResponseEntity<Result<List<FollowingUserResponse>>> followerList(@PathVariable Long userId){
+        Result<List<FollowingUserResponse>> response = followService.getFollowers(userId);
+        return ResponseEntity.ok(response);
+    }
 
     @PostMapping("/{userId}")
     public ResponseEntity<FollowResponse> FollowRequest(@PathVariable Long userId){

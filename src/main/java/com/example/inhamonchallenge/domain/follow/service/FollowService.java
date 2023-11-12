@@ -38,6 +38,16 @@ public class FollowService {
         return new Result<>(response);
     }
 
+
+    public Result<List<FollowingUserResponse>> getFollowers(Long userId) {
+        userRepository.findById(userId).orElseThrow(NotFoundUserException::new);
+        List<User> followers = followRepository.findAllByFollowingId(userId);
+        List<FollowingUserResponse> response = followers.stream()
+                .map(FollowingUserResponse::from)
+                .collect(Collectors.toList());
+        return new Result<>(response);
+    }
+
     public FollowResponse requestFollow(Long userId) {
         Long currentMemberId = getCurrentMemberId();
 
@@ -74,5 +84,4 @@ public class FollowService {
 
         followRepository.delete(follow);
     }
-
 }
