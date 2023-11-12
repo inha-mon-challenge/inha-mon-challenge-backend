@@ -1,11 +1,15 @@
 package com.example.inhamonchallenge.domain.follow.controller;
 
+import com.example.inhamonchallenge.domain.common.dto.Result;
 import com.example.inhamonchallenge.domain.follow.dto.FollowResponse;
+import com.example.inhamonchallenge.domain.follow.dto.FollowingUserResponse;
 import com.example.inhamonchallenge.domain.follow.service.FollowService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -13,6 +17,13 @@ import org.springframework.web.bind.annotation.*;
 public class FollowController {
 
     private final FollowService followService;
+
+    @GetMapping("/{userId}/following")
+    public ResponseEntity<Result<List<FollowingUserResponse>>> followingList(@PathVariable Long userId){
+        Result<List<FollowingUserResponse>> response = followService.getFollowings(userId);
+        return ResponseEntity.ok(response);
+    }
+
 
     @PostMapping("/{userId}")
     public ResponseEntity<FollowResponse> FollowRequest(@PathVariable Long userId){

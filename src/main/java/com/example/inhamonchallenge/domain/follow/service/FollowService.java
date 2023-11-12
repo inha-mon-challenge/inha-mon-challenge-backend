@@ -1,8 +1,10 @@
 package com.example.inhamonchallenge.domain.follow.service;
 
+import com.example.inhamonchallenge.domain.common.dto.Result;
 import com.example.inhamonchallenge.domain.follow.controller.FollowStatus;
 import com.example.inhamonchallenge.domain.follow.domain.Follow;
 import com.example.inhamonchallenge.domain.follow.dto.FollowResponse;
+import com.example.inhamonchallenge.domain.follow.dto.FollowingUserResponse;
 import com.example.inhamonchallenge.domain.follow.exception.ExistFollowException;
 import com.example.inhamonchallenge.domain.follow.exception.NotFoundFollowException;
 import com.example.inhamonchallenge.domain.follow.repository.FollowRepository;
@@ -14,6 +16,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import static com.example.inhamonchallenge.global.security.SecurityUtil.*;
 
 @Service
@@ -24,7 +29,16 @@ public class FollowService {
     private final FollowRepository followRepository;
     private final UserRepository userRepository;
 
-    public FollowResponse requestFollow(Long userId){
+    public Result<List<FollowingUserResponse>> getFollowings(Long userId) {
+        userRepository.findById(userId).orElseThrow(NotFoundUserException::new);
+        List<User> followings = followRepository.findAcceptedFollowingByUserId(userId);
+        List<FollowingUserResponse> response = followings.stream()
+                .map(FollowingUserResponse::from)
+                .collect(Collectors.toList());
+        return new Result<>(response);
+    }
+
+    public FollowResponse requestFollow(Long userId) {
         Long currentMemberId = getCurrentMemberId();
 
         if (followRepository.existsByFollowerIdAndFollowingId(currentMemberId, userId)) {
@@ -60,4 +74,5 @@ public class FollowService {
 
         followRepository.delete(follow);
     }
+
 }
