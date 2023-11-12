@@ -3,6 +3,7 @@ package com.example.inhamonchallenge.domain.follow.service;
 import com.example.inhamonchallenge.domain.common.dto.Result;
 import com.example.inhamonchallenge.domain.follow.controller.FollowStatus;
 import com.example.inhamonchallenge.domain.follow.domain.Follow;
+import com.example.inhamonchallenge.domain.follow.dto.FollowRequestResponse;
 import com.example.inhamonchallenge.domain.follow.dto.FollowResponse;
 import com.example.inhamonchallenge.domain.follow.dto.FollowingUserResponse;
 import com.example.inhamonchallenge.domain.follow.exception.ExistFollowException;
@@ -48,6 +49,15 @@ public class FollowService {
         return new Result<>(response);
     }
 
+    public Result<List<FollowRequestResponse>> getRequestList() {
+        Long currentMemberId = getCurrentMemberId();
+        List<Follow> followRequests = followRepository.findAllByFollowingIdAndStatus(currentMemberId);
+        List<FollowRequestResponse> response = followRequests.stream()
+                .map(follow -> FollowRequestResponse.from(follow.getId(), follow.getFollower()))
+                .collect(Collectors.toList());
+        return new Result<>(response);
+    }
+
     public FollowResponse requestFollow(Long userId) {
         Long currentMemberId = getCurrentMemberId();
 
@@ -84,4 +94,6 @@ public class FollowService {
 
         followRepository.delete(follow);
     }
+
+
 }

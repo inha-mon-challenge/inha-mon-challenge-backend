@@ -1,6 +1,7 @@
 package com.example.inhamonchallenge.domain.follow.controller;
 
 import com.example.inhamonchallenge.domain.common.dto.Result;
+import com.example.inhamonchallenge.domain.follow.dto.FollowRequestResponse;
 import com.example.inhamonchallenge.domain.follow.dto.FollowResponse;
 import com.example.inhamonchallenge.domain.follow.dto.FollowingUserResponse;
 import com.example.inhamonchallenge.domain.follow.service.FollowService;
@@ -27,6 +28,12 @@ public class FollowController {
     @GetMapping("/{userId}/follower")
     public ResponseEntity<Result<List<FollowingUserResponse>>> followerList(@PathVariable Long userId){
         Result<List<FollowingUserResponse>> response = followService.getFollowers(userId);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/request")
+    public ResponseEntity<Result<List<FollowRequestResponse>>> requestList(){
+        Result<List<FollowRequestResponse>> response = followService.getRequestList();
         return ResponseEntity.ok(response);
     }
 
