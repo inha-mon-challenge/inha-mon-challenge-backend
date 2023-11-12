@@ -25,4 +25,10 @@ public class FollowController {
         FollowResponse response = followService.acceptFollow(followId);
         return ResponseEntity.ok(response);
     }
+
+    @DeleteMapping("/{followId}")
+    public ResponseEntity<Void> FollowDelete(@PathVariable Long followId){
+        followService.deleteFollow(followId);
+        return ResponseEntity.noContent().build();
+    }
 }

@@ -4,6 +4,7 @@ import com.example.inhamonchallenge.domain.follow.controller.FollowStatus;
 import com.example.inhamonchallenge.domain.follow.domain.Follow;
 import com.example.inhamonchallenge.domain.follow.dto.FollowResponse;
 import com.example.inhamonchallenge.domain.follow.exception.ExistFollowException;
+import com.example.inhamonchallenge.domain.follow.exception.NotFoundFollowException;
 import com.example.inhamonchallenge.domain.follow.repository.FollowRepository;
 import com.example.inhamonchallenge.domain.user.domain.User;
 import com.example.inhamonchallenge.domain.user.exception.NotFoundUserException;
@@ -46,10 +47,17 @@ public class FollowService {
 
     public FollowResponse acceptFollow(Long followId) {
         Follow follow = followRepository.findById(followId)
-                .orElseThrow(NotFoundUserException::new);
+                .orElseThrow(NotFoundFollowException::new);
 
         follow.acceptFollow();
 
         return FollowResponse.from(follow.getId(), follow.getFollower().getId(), follow.getFollowing().getId());
+    }
+
+    public void deleteFollow(Long followId) {
+        Follow follow = followRepository.findById(followId)
+                .orElseThrow(NotFoundFollowException::new);
+
+        followRepository.delete(follow);
     }
 }
