@@ -22,6 +22,8 @@ public enum ErrorCode {
     //종아요
     ExistsLikeException(409, "이미 좋아요를 누른 피드입니다.", HttpStatus.CONFLICT),
     NOT_FOUND_LIKES_EXCEPTION(404, "존재하지 않는 좋아요입니다.", NOT_FOUND),
+    //팔로우
+    EXIST_FOLLOW_EXCEPTION(409, "이미 팔로우한 유저입니다.", HttpStatus.CONFLICT),
     //공통
     UPDATE_DENIED_EXCEPTION(403, "수정 권한이 없습니다.", FORBIDDEN),
     DELETE_DENIED_EXCEPTION(403, "삭제 권한이 없습니다.", FORBIDDEN),
