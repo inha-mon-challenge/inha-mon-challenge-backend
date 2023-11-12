@@ -35,4 +35,8 @@ public class Follow extends BaseCreateTime {
         this.following = following;
         this.status = status;
     }
+
+    public void acceptFollow() {
+        this.status = FollowStatus.ACCEPTED;
+    }
 }

@@ -43,4 +43,13 @@ public class FollowService {
 
         return FollowResponse.from(followRepository.save(follow).getId(), currentMemberId, userId);
     }
+
+    public FollowResponse acceptFollow(Long followId) {
+        Follow follow = followRepository.findById(followId)
+                .orElseThrow(NotFoundUserException::new);
+
+        follow.acceptFollow();
+
+        return FollowResponse.from(follow.getId(), follow.getFollower().getId(), follow.getFollowing().getId());
+    }
 }
