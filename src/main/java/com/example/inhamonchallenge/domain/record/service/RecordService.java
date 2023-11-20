@@ -38,7 +38,7 @@ public class RecordService {
     public SaveRecordResponse addRecord(SaveRecordRequest request, Long habitId) {
         User user = userRepository.findById(getCurrentMemberId()).orElseThrow(NotFoundUserException::new);
         Habit habit = habitRepository.findById(habitId).orElseThrow(NotFoundHabitException::new);
-        Record record = SaveRecordRequest.toEntity(request, habit, user, "xxx");
+        Record record = SaveRecordRequest.toEntity(request, habit, user);
         Record savedRecord = recordRepository.save(record);
         return SaveRecordResponse.from(savedRecord);
     }

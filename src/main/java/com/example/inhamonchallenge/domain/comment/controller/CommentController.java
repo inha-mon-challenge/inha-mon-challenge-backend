@@ -1,9 +1,6 @@
 package com.example.inhamonchallenge.domain.comment.controller;
 
-import com.example.inhamonchallenge.domain.comment.dto.CommentResponse;
-import com.example.inhamonchallenge.domain.comment.dto.SaveCommentRequest;
-import com.example.inhamonchallenge.domain.comment.dto.SaveCommentResponse;
-import com.example.inhamonchallenge.domain.comment.dto.UpdateCommentRequest;
+import com.example.inhamonchallenge.domain.comment.dto.*;
 import com.example.inhamonchallenge.domain.comment.service.CommentService;
 import com.example.inhamonchallenge.domain.common.FeedType;
 import com.example.inhamonchallenge.domain.common.dto.Result;
@@ -33,8 +30,8 @@ public class CommentController {
     }
 
     @GetMapping
-    ResponseEntity<Result<List<CommentResponse>>> CommentList(@RequestParam FeedType feedType,
-                                                              @RequestParam Long feedId) {
+    ResponseEntity<Result<List<CommentWithReplyResponse>>> CommentList(@RequestParam FeedType feedType,
+                                                                       @RequestParam Long feedId) {
         return ResponseEntity.ok(commentService.getCommentList(feedType, feedId));
     }
 

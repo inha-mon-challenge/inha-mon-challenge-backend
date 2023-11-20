@@ -18,7 +18,7 @@ public class ImageRecordResponse {
     public static ImageRecordResponse from(Record record) {
         return ImageRecordResponse.builder()
                 .image(record.getImage())
-                .createdAt(record.getCreatedDateTime())
+                .createdAt(record.getCreatedAt())
                 .build();
     }
 }

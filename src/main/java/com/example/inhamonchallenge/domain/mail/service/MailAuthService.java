@@ -41,7 +41,7 @@ public class MailAuthService {
         if(findMail.isEmpty()) {
             return EmailVerifyResponse.from(false, "인증 정보가 존재하지 않습니다.");
         }
-        if(isTimeDifferenceGreaterThan30Minutes(findMail.get().getCreatedDateTime())) {
+        if(isTimeDifferenceGreaterThan30Minutes(findMail.get().getCreatedAt())) {
             return EmailVerifyResponse.from(false, "인증 시간이 초과되었습니다.");
         }
         if(!findMail.get().getCode().equals(authCode)) {

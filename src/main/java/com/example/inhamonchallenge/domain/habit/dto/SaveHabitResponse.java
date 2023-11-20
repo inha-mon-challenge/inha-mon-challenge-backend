@@ -36,7 +36,7 @@ public class SaveHabitResponse {
                 .content(habit.getContent())
                 .title(habit.getTitle())
                 .hashtag(Arrays.asList(habit.getHashtags().split(",")))
-                .createdAt(habit.getCreatedDateTime())
+                .createdAt(habit.getCreatedAt())
                 .build();
     }
 }

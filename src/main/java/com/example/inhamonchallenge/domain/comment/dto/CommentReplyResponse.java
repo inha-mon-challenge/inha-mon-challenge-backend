@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class CommentResponse {
+public class CommentReplyResponse {
 
     private Long commentId;
     private String username;
@@ -17,8 +17,8 @@ public class CommentResponse {
     private String content;
     private LocalDateTime createdAt;
 
-    public static CommentResponse from(Comment comment) {
-        return CommentResponse.builder()
+    public static CommentReplyResponse from(Comment comment) {
+        return CommentReplyResponse.builder()
                 .commentId(comment.getId())
                 .username(comment.getUser().getName())
                 .profile(comment.getUser().getProfile())
@@ -26,4 +26,5 @@ public class CommentResponse {
                 .createdAt(comment.getCreatedAt())
                 .build();
     }
+
 }

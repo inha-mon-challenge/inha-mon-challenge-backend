@@ -19,9 +19,12 @@ public class SaveCommentRequest {
 
     private Long feedId;
 
-    public static Comment toEntity(SaveCommentRequest request, User user) {
+    private Long parentId;
+
+    public static Comment toEntity(SaveCommentRequest request, User user, Comment comment) {
         return Comment.builder()
                 .user(user)
+                .comment(comment)
                 .feedId(request.getFeedId())
                 .content(request.getContent())
                 .feedType(request.getFeedType())

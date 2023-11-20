@@ -30,7 +30,7 @@ public class HabitAndRecordResponse {
                 .category(habit.getCategory())
                 .title(habit.getTitle())
                 .content(habit.getContent())
-                .dayCount(Duration.between(habit.getCreatedDateTime(), LocalDateTime.now()).toDays() + 1)
+                .dayCount(Duration.between(habit.getCreatedAt(), LocalDateTime.now()).toDays() + 1)
                 .images(records.stream().map(record -> ImageRecordResponse.from(record)).collect(Collectors.toList()))
                 .build();
     }
