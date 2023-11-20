@@ -32,7 +32,11 @@ public class CommentService {
 
     public SaveCommentResponse addComment(SaveCommentRequest request) {
         User user = userRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(NotFoundUserException::new);
-        return SaveCommentResponse.from(commentRepository.save(SaveCommentRequest.toEntity(request, user)));
+        if (request.getParentId() != null) {
+            Comment parent = commentRepository.findById(request.getParentId()).orElseThrow(NotFoundCommentException::new);
+            return SaveCommentResponse.from(commentRepository.save(SaveCommentRequest.toEntity(request, user, parent)));
+        }
+        return SaveCommentResponse.from(commentRepository.save(SaveCommentRequest.toEntity(request, user, null)));
     }
 
     public CommentResponse getComment(Long commentId) {
@@ -50,7 +54,7 @@ public class CommentService {
     public SaveCommentResponse updateComment(Long commentId, UpdateCommentRequest request) {
         User user = userRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(NotFoundUserException::new);
         Comment comment = commentRepository.findById(commentId).orElseThrow(NotFoundCommentException::new);
-        if(user.getId() != comment.getUser().getId()) {
+        if (user.getId() != comment.getUser().getId()) {
             throw new UpdateDeniedException();
         }
         comment.update(request.getContent());
@@ -60,7 +64,7 @@ public class CommentService {
     public void deleteComment(Long commentId) {
         User user = userRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(NotFoundUserException::new);
         Comment comment = commentRepository.findById(commentId).orElseThrow(NotFoundCommentException::new);
-        if(user.getId() != comment.getUser().getId()) {
+        if (user.getId() != comment.getUser().getId()) {
             throw new DeleteDeniedException();
         }
         commentRepository.delete(comment);

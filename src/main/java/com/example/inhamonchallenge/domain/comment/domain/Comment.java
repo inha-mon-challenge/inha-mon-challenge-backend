@@ -22,6 +22,10 @@ public class Comment extends BaseTime {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "parent_id")
+    private Comment parent;
+
     private Long feedId;
 
     private String content;
@@ -32,9 +36,10 @@ public class Comment extends BaseTime {
     private int reportCnt;
 
     @Builder
-    public Comment(Long id, User user, Long feedId, String content, FeedType feedType, int reportCnt) {
+    public Comment(Long id, User user, Comment comment, Long feedId, String content, FeedType feedType, int reportCnt) {
         this.id = id;
         this.user = user;
+        this.parent = comment;
         this.feedId = feedId;
         this.content = content;
         this.feedType = feedType;
