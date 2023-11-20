@@ -48,7 +48,7 @@ public class HabitResponse {
                 .currentRecordCnt(habit.getCurrentRecordCnt())
                 .hashtag(Arrays.asList(habit.getHashtags().split(",")))
                 .like(habit.getLikeCnt())
-                .createdAt(habit.getCreatedDateTime())
+                .createdAt(habit.getCreatedAt())
                 .build();
     }
 

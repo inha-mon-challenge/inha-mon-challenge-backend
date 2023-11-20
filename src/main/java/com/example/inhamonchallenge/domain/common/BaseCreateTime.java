@@ -14,5 +14,5 @@ import java.time.LocalDateTime;
 public abstract class BaseCreateTime {
 
     @CreatedDate
-    private LocalDateTime createdDateTime;
+    private LocalDateTime createdAt;
 }

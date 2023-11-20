@@ -31,7 +31,7 @@ public class RecordResponse {
                 .content(record.getContent())
                 .image(record.getImage())
                 .hashtag(Arrays.asList(record.getHashtags().split(",")))
-                .createdAt(record.getCreatedDateTime())
+                .createdAt(record.getCreatedAt())
                 .like(record.getLikeCnt())
                 .build();
     }

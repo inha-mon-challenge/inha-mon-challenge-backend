@@ -11,6 +11,5 @@ import java.util.List;
 
 public interface CommentRepository extends JpaRepository<Comment, Long> {
 
-    @Query("select c from Comment c where c.feedId = :feedId and c.feedType = :feedType order by c.createdDateTime")
-    List<Comment> findAllByFeedIdAnAndFeedType(@Param("feedId") Long feedId, @Param("feedType") FeedType feedType);
+    List<Comment> findByFeedTypeAndFeedIdAndParentIsNullOrderByCreatedAt(FeedType feedType, Long feedId);
 }

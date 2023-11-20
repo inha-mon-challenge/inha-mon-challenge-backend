@@ -1,10 +1,7 @@
 package com.example.inhamonchallenge.domain.comment.service;
 
 import com.example.inhamonchallenge.domain.comment.domain.Comment;
-import com.example.inhamonchallenge.domain.comment.dto.CommentResponse;
-import com.example.inhamonchallenge.domain.comment.dto.SaveCommentRequest;
-import com.example.inhamonchallenge.domain.comment.dto.SaveCommentResponse;
-import com.example.inhamonchallenge.domain.comment.dto.UpdateCommentRequest;
+import com.example.inhamonchallenge.domain.comment.dto.*;
 import com.example.inhamonchallenge.domain.comment.exception.NotFoundCommentException;
 import com.example.inhamonchallenge.domain.comment.repository.CommentRepository;
 import com.example.inhamonchallenge.domain.common.FeedType;
@@ -19,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -44,11 +42,19 @@ public class CommentService {
         return CommentResponse.from(comment);
     }
 
-    public Result<List<CommentResponse>> getCommentList(FeedType feedType, Long feedId) {
-        List<Comment> comments = commentRepository.findAllByFeedIdAnAndFeedType(feedId, feedType);
-        List<CommentResponse> response = comments.stream().map(comment -> CommentResponse.from(comment))
+    public Result<List<CommentWithReplyResponse>> getCommentList(FeedType feedType, Long feedId) {
+        List<Comment> parentComments = commentRepository.findByFeedTypeAndFeedIdAndParentIsNullOrderByCreatedAt(feedType, feedId);
+        List<CommentWithReplyResponse> responses = parentComments.stream()
+                .map(parentComment -> {
+                    List<CommentReplyResponse> childResponses = parentComment.getReplies().stream()
+                            .sorted(Comparator.comparing(Comment::getCreatedAt))
+                            .map(child -> CommentReplyResponse.from(child))
+                            .collect(Collectors.toList());
+                    return CommentWithReplyResponse.from(parentComment, childResponses);
+                })
                 .collect(Collectors.toList());
-        return new Result<>(response);
+
+        return new Result<>(responses);
     }
 
     public SaveCommentResponse updateComment(Long commentId, UpdateCommentRequest request) {

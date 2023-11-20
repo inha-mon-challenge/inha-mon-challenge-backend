@@ -23,7 +23,7 @@ public class SaveCommentResponse {
                 .userId(comment.getUser().getId())
                 .username(comment.getUser().getName())
                 .content(comment.getContent())
-                .createdAt(comment.getCreatedDateTime())
+                .createdAt(comment.getCreatedAt())
                 .build();
     }
 }

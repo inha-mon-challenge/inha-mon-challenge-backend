@@ -29,7 +29,7 @@ public class SignupRequest {
     @NotBlank(message = "이름 입력은 필수입니다.")
     private String name;
     private LocalDate birth;
-    private Gender gender;
+    private String gender;
 
     public User toEntity(PasswordEncoder passwordEncoder){
         return User.builder()
@@ -37,7 +37,7 @@ public class SignupRequest {
                 .password(passwordEncoder.encode(password))
                 .name(name)
                 .birth(birth)
-                .gender(gender)
+                .gender(Gender.valueOf(gender.toUpperCase()))
                 .role(Role.ROLE_USER)
                 .build();
     }

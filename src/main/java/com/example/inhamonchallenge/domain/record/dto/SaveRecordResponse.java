@@ -29,7 +29,7 @@ public class SaveRecordResponse {
                 .content(record.getContent())
                 .image(record.getImage())
                 .hashtag(Arrays.asList(record.getHashtags().split(",")))
-                .createdAt(record.getCreatedDateTime())
+                .createdAt(record.getCreatedAt())
                 .build();
     }
 }
