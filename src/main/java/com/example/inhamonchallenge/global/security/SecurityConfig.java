@@ -54,9 +54,13 @@ public class SecurityConfig {
                 .authorizeHttpRequests(request -> request
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/mails/**").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/**").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/api/habits/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/records/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/users/*/habits").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/comments/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/follow/**").permitAll()
                         .requestMatchers(HttpMethod.OPTIONS, "/**/*").permitAll()
-                        .anyRequest().permitAll())
+                        .anyRequest().authenticated())
                 .apply(new JwtSecurityConfig(tokenProvider));
 
         return http.build();

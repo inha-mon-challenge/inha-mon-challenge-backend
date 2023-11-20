@@ -14,13 +14,13 @@ import java.util.List;
 public class SaveRecordRequest {
 
     private String content;
-    private MultipartFile image;
+    private String image;
     private List<String> hashTag;
 
-    public static Record toEntity(SaveRecordRequest request, Habit habit, User user, String imageUrl) {
+    public static Record toEntity(SaveRecordRequest request, Habit habit, User user) {
         return Record.builder()
                 .habit(habit)
-                .image(imageUrl)
+                .image(request.image)
                 .user(user)
                 .content(request.getContent())
                 .hashtags(String.join(",", request.getHashTag()))
