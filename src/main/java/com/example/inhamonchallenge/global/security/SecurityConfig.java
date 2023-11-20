@@ -54,7 +54,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(request -> request
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/mails/**").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/**").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/api/**").permitAll()
                         .requestMatchers(HttpMethod.OPTIONS, "/**/*").permitAll()
                         .anyRequest().permitAll())
                 .apply(new JwtSecurityConfig(tokenProvider));
