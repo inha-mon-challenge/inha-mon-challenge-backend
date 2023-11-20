@@ -1,10 +1,23 @@
 package com.example.inhamonchallenge.global.security;
 
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+
+@Slf4j
 public class SecurityUtil {
 
+    private SecurityUtil() {
+    }
+
     public static Long getCurrentMemberId() {
-        //Spring Security 적용 후 401 응답 테스트
-        return 8L;
+        final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication == null || authentication.getName() == null) {
+            throw new RuntimeException("Security Context 에 인증 정보가 없습니다.");
+        }
+
+        return Long.parseLong(authentication.getName());
     }
 
 }
