@@ -11,12 +11,14 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ImageRecordResponse {
 
+    private Long recordId;
     private String image;
 
     private LocalDateTime createdAt;
 
     public static ImageRecordResponse from(Record record) {
         return ImageRecordResponse.builder()
+                .recordId(record.getId())
                 .image(record.getImage())
                 .createdAt(record.getCreatedAt())
                 .build();

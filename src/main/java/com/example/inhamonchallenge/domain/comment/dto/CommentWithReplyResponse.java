@@ -18,7 +18,7 @@ public class CommentWithReplyResponse {
     private String profile;
     private String content;
     private LocalDateTime createdAt;
-    List<CommentReplyResponse> replies = new ArrayList<>();
+    List<CommentReplyResponse> replies;
 
     public static CommentWithReplyResponse from(Comment comment, List<CommentReplyResponse> replies) {
         return CommentWithReplyResponse.builder()
