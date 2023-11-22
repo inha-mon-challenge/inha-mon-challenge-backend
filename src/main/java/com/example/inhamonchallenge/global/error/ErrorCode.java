@@ -31,6 +31,8 @@ public enum ErrorCode {
     INVALID_ACCESS_TOKEN_EXCEPTION(401, "액세스 토큰이 올바르지 않습니다.", HttpStatus.UNAUTHORIZED),
     INVALID_REFRESH_TOKEN_EXCEPTION(401, "리프레시 토큰이 올바르지 않습니다.", HttpStatus.UNAUTHORIZED),
     LOGOUT_USER_EXCEPTION(401, "로그아웃 한 유저입니다.", HttpStatus.UNAUTHORIZED),
+    NOT_LOGIN_EXCEPTION(401, "로그인이 필요합니다.", HttpStatus.UNAUTHORIZED),
+
     //팔로우
     EXIST_FOLLOW_EXCEPTION(409, "이미 팔로우한 유저입니다.", HttpStatus.CONFLICT),
     NOT_FOUND_FOLLOW_EXCEPTION(404, "존재하지 않는 팔로우입니다.", NOT_FOUND),
