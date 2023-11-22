@@ -16,6 +16,8 @@ public class HabitResponse {
 
     private Long habitId;
 
+    private Long userId;
+
     private String username;
 
     private Category category;
@@ -38,6 +40,7 @@ public class HabitResponse {
 
     public static HabitResponse from(Habit habit) {
         return HabitResponse.builder()
+                .userId(habit.getUser().getId())
                 .habitId(habit.getId())
                 .username(habit.getUser().getName())
                 .category(habit.getCategory())
