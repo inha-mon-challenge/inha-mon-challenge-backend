@@ -50,4 +50,18 @@ public class MainPageRecordService {
                 .map(RecordResponse::from)
                 .collect(Collectors.toList()));
     }
+
+    public Result<List<RecordResponse>> getPublicRecords(Long cursor) {
+        if (cursor == null) {
+            cursor = Long.MAX_VALUE;
+        }
+
+        Pageable pageable = PageRequest.of(0, 10, Sort.by(Sort.Direction.DESC, "id"));
+        Slice<Record> publicRecords = recordRepository.findPublicTop10(cursor, pageable);
+
+        return new Result<>(publicRecords.getContent()
+                .stream()
+                .map(RecordResponse::from)
+                .collect(Collectors.toList()));
+    }
 }

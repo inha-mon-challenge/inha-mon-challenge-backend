@@ -29,4 +29,9 @@ public class MainPageRecordController {
     ResponseEntity<Result<List<RecordResponse>>> getNonFollowingRecords(@RequestParam(required = false) Long cursor, @RequestParam int count) {
         return ResponseEntity.ok(mainPageRecordService.getNonFollowingRecords(cursor, count));
     }
+
+    @GetMapping("public")
+    ResponseEntity<Result<List<RecordResponse>>> getPublicRecords(@RequestParam(required = false) Long cursor) {
+        return ResponseEntity.ok(mainPageRecordService.getPublicRecords(cursor));
+    }
 }
