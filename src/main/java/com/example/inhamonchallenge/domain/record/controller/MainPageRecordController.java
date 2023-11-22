@@ -23,6 +23,10 @@ public class MainPageRecordController {
     @GetMapping("/following")
     ResponseEntity<Result<List<RecordResponse>>> getFollowingRecords(@RequestParam(name = "cursor", required = false) Long cursor) {
         return ResponseEntity.ok(mainPageRecordService.getFollowingRecords(cursor));
+    }
 
+    @GetMapping("/non-following")
+    ResponseEntity<Result<List<RecordResponse>>> getNonFollowingRecords(@RequestParam(required = false) Long cursor, @RequestParam int count) {
+        return ResponseEntity.ok(mainPageRecordService.getNonFollowingRecords(cursor, count));
     }
 }

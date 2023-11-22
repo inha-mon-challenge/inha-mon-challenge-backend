@@ -36,4 +36,18 @@ public class MainPageRecordService {
                 .map(RecordResponse::from)
                 .collect(Collectors.toList()));
     }
+
+    public Result<List<RecordResponse>> getNonFollowingRecords(Long cursor, int count) {
+        if (cursor == null) {
+            cursor = Long.MAX_VALUE;
+        }
+
+        Pageable pageable = PageRequest.of(0, count, Sort.by(Sort.Direction.DESC, "id"));
+        Slice<Record> nonFollowingRecords = recordRepository.findNonFollowingTop(getCurrentMemberId(), cursor, pageable);
+
+        return new Result<>(nonFollowingRecords.getContent()
+                .stream()
+                .map(RecordResponse::from)
+                .collect(Collectors.toList()));
+    }
 }

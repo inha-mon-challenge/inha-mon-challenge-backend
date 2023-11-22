@@ -14,4 +14,11 @@ public interface RecordRepository extends JpaRepository<Record, Long> {
     @Query("select r from Record r join fetch Follow f on r.user.id = f.following.id " +
             "where f.follower.id = :userId and r.id < :cursor order by r.id desc")
     Slice<Record> findFollowingTop4(@Param("userId") Long userId, @Param("cursor") Long cursor, Pageable pageable);
+
+    @Query("select r from Record r where r.user.id not in " +
+            "(select f.following.id from Follow f where f.follower.id = :userId) " +
+            "and r.user.id != :userId " +
+            "and r.id < :cursor order by r.id desc")
+    Slice<Record> findNonFollowingTop(@Param("userId") Long userId, @Param("cursor") Long cursor, Pageable pageable);
+
 }
