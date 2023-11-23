@@ -13,6 +13,10 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class RecordResponse {
 
+    private Long userId;
+
+    private Long habitId;
+
     private Long recordId;
 
     private String content;
@@ -27,6 +31,8 @@ public class RecordResponse {
 
     public static RecordResponse from(Record record) {
         return RecordResponse.builder()
+                .userId(record.getUser().getId())
+                .habitId(record.getHabit().getId())
                 .recordId(record.getId())
                 .content(record.getContent())
                 .image(record.getImage())
