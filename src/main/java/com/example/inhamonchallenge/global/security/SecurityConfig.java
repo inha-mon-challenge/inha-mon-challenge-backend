@@ -59,6 +59,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/users/*/habits").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/comments/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/follow/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/search/**").permitAll()
                         .requestMatchers(HttpMethod.OPTIONS, "/**/*").permitAll()
                         .anyRequest().authenticated())
                 .apply(new JwtSecurityConfig(tokenProvider));
