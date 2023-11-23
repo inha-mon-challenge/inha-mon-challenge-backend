@@ -1,6 +1,8 @@
 package com.example.inhamonchallenge.domain.record.controller;
 
 import com.example.inhamonchallenge.domain.common.dto.Result;
+import com.example.inhamonchallenge.domain.habit.dto.HabitResponse;
+import com.example.inhamonchallenge.domain.habit.dto.RecommendHabitResponse;
 import com.example.inhamonchallenge.domain.record.dto.RecordResponse;
 import com.example.inhamonchallenge.domain.record.service.MainPageRecordService;
 import lombok.RequiredArgsConstructor;
@@ -30,8 +32,13 @@ public class MainPageRecordController {
         return ResponseEntity.ok(mainPageRecordService.getNonFollowingRecords(cursor, count));
     }
 
-    @GetMapping("public")
+    @GetMapping("/public")
     ResponseEntity<Result<List<RecordResponse>>> getPublicRecords(@RequestParam(required = false) Long cursor) {
         return ResponseEntity.ok(mainPageRecordService.getPublicRecords(cursor));
+    }
+
+    @GetMapping("/recommend")
+    ResponseEntity<Result<List<RecommendHabitResponse>>> getRecommendHabits() {
+        return ResponseEntity.ok(mainPageRecordService.getRecommendHabits());
     }
 }

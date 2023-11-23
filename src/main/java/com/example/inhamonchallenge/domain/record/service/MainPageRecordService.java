@@ -1,6 +1,8 @@
 package com.example.inhamonchallenge.domain.record.service;
 
 import com.example.inhamonchallenge.domain.common.dto.Result;
+import com.example.inhamonchallenge.domain.habit.dto.RecommendHabitResponse;
+import com.example.inhamonchallenge.domain.habit.repository.HabitRepository;
 import com.example.inhamonchallenge.domain.record.domain.Record;
 import com.example.inhamonchallenge.domain.record.dto.RecordResponse;
 import com.example.inhamonchallenge.domain.record.repository.RecordRepository;
@@ -24,6 +26,7 @@ import static com.example.inhamonchallenge.global.security.SecurityUtil.*;
 public class MainPageRecordService {
 
     private final RecordRepository recordRepository;
+    private final HabitRepository habitRepository;
 
     public Result<List<RecordResponse>> getFollowingRecords(Long cursor) {
         if(cursor == null) {
@@ -63,5 +66,14 @@ public class MainPageRecordService {
                 .stream()
                 .map(RecordResponse::from)
                 .collect(Collectors.toList()));
+    }
+
+    public Result<List<RecommendHabitResponse>> getRecommendHabits() {
+        List<RecommendHabitResponse> recommendHabits = habitRepository.findRandomHabits()
+                .stream()
+                .map(RecommendHabitResponse::from)
+                .collect(Collectors.toList());
+
+        return new Result<>(recommendHabits);
     }
 }
