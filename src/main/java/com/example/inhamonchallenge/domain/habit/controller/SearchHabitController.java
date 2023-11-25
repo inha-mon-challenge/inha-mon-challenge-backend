@@ -26,4 +26,11 @@ public class SearchHabitController {
         Result<List<SearchHabitResponse>> response = searchHabitService.searchHabit(keyword, cursor);
         return ResponseEntity.ok(response);
     }
+
+    @GetMapping("/hashtags")
+    ResponseEntity<Result<List<SearchHabitResponse>>> searchByHashtags(@RequestParam String keyword,
+                                                          @RequestParam(required = false) Long cursor) {
+        Result<List<SearchHabitResponse>> response = searchHabitService.searchByHashtags(keyword, cursor);
+        return ResponseEntity.ok(response);
+    }
 }

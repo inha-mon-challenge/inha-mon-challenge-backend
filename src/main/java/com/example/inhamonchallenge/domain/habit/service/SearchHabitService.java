@@ -21,10 +21,20 @@ public class SearchHabitService {
     private final HabitRepository habitRepository;
 
     public Result<List<SearchHabitResponse>> searchHabit(String keyword, Long cursor) {
-        if(cursor == null) {
+        if (cursor == null) {
             cursor = Long.MAX_VALUE;
         }
         List<Habit> habits = habitRepository.searchHabitsByKeyword(keyword, cursor, PageRequest.of(0, 10)).getContent();
+        return new Result<>(habits.stream()
+                .map(SearchHabitResponse::from)
+                .collect(Collectors.toList()));
+    }
+
+    public Result<List<SearchHabitResponse>> searchByHashtags(String keyword, Long cursor) {
+        if (cursor == null) {
+            cursor = Long.MAX_VALUE;
+        }
+        List<Habit> habits = habitRepository.searchByHashtags(keyword.replace(" ", ""), cursor, PageRequest.of(0, 10)).getContent();
         return new Result<>(habits.stream()
                 .map(SearchHabitResponse::from)
                 .collect(Collectors.toList()));
