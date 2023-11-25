@@ -37,8 +37,4 @@ public class MainPageRecordController {
         return ResponseEntity.ok(mainPageRecordService.getPublicRecords(cursor));
     }
 
-    @GetMapping("/recommend")
-    ResponseEntity<Result<List<RecommendHabitResponse>>> getRecommendHabits() {
-        return ResponseEntity.ok(mainPageRecordService.getRecommendHabits());
-    }
 }

@@ -26,7 +26,6 @@ import static com.example.inhamonchallenge.global.security.SecurityUtil.*;
 public class MainPageRecordService {
 
     private final RecordRepository recordRepository;
-    private final HabitRepository habitRepository;
 
     public Result<List<RecordResponse>> getFollowingRecords(Long cursor) {
         if(cursor == null) {
@@ -68,12 +67,4 @@ public class MainPageRecordService {
                 .collect(Collectors.toList()));
     }
 
-    public Result<List<RecommendHabitResponse>> getRecommendHabits() {
-        List<RecommendHabitResponse> recommendHabits = habitRepository.findRandomHabits()
-                .stream()
-                .map(RecommendHabitResponse::from)
-                .collect(Collectors.toList());
-
-        return new Result<>(recommendHabits);
-    }
 }
