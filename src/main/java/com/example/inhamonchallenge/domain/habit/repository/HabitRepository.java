@@ -22,5 +22,7 @@ public interface HabitRepository extends JpaRepository<Habit, Long> {
 
     @Query(value = "SELECT h FROM Habit h WHERE FIND_IN_SET(:keyword, h.hashtags) > 0 and h.id < :cursor ORDER BY h.id DESC")
     Slice<Habit> searchByHashtags(@Param("keyword") String keyword, @Param("cursor") Long cursor, Pageable pageable);
-
+    
+    @Query(nativeQuery = true, value = "SELECT * FROM habit ORDER BY RAND() LIMIT 4")
+    List<Habit> findRandomHabits();
 }
