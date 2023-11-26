@@ -18,6 +18,8 @@ import java.util.stream.Collectors;
 public class HabitAndRecordResponse {
 
     private Long habitId;
+    private Long userId;
+    private String username;
     private Category category;
     private String title;
     private String content;
@@ -28,6 +30,8 @@ public class HabitAndRecordResponse {
     public static HabitAndRecordResponse from(Habit habit, List<Record> records) {
         return HabitAndRecordResponse.builder()
                 .habitId(habit.getId())
+                .userId(habit.getUser().getId())
+                .username(habit.getUser().getName())
                 .category(habit.getCategory())
                 .title(habit.getTitle())
                 .content(habit.getContent())
