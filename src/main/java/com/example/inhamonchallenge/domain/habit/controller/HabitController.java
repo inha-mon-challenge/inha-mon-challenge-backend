@@ -21,9 +21,8 @@ public class HabitController {
     private final HabitService habitService;
 
     @GetMapping("/habits/{habitId}")
-    ResponseEntity<HabitResponse> habitDetails(@PathVariable Long habitId) {
-        HabitResponse response = habitService.getHabit(habitId);
-        return ResponseEntity.ok(response);
+    ResponseEntity<HabitAndRecordResponse> habitDetails(@PathVariable Long habitId) {
+        return ResponseEntity.ok(habitService.getHabit(habitId));
     }
 
     @GetMapping("/users/{userId}/habits")

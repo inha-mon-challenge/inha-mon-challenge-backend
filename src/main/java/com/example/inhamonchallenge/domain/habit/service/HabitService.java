@@ -32,11 +32,13 @@ import java.util.stream.Collectors;
 public class HabitService {
 
     private final HabitRepository habitRepository;
+    private final RecordRepository recordRepository;
     private final UserRepository userRepository;
 
-    public HabitResponse getHabit(Long habitId) {
+    public HabitAndRecordResponse getHabit(Long habitId) {
         Habit habit = habitRepository.findById(habitId).orElseThrow(NotFoundHabitException::new);
-        return HabitResponse.from(habit);
+        List<Record> records = recordRepository.findByHabitId(habitId);
+        return HabitAndRecordResponse.from(habit, records);
     }
 
     public SaveHabitResponse addHabit(SaveHabitRequest request) {
