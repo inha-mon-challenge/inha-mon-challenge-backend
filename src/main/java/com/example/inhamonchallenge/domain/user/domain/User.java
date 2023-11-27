@@ -36,8 +36,10 @@ public class User extends BaseTime {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    private boolean isPublic;
+
     @Builder
-    public User(Long id, String name, String email, String password, LocalDate birth, Gender gender, String profile, Role role) {
+    public User(Long id, String name, String email, String password, LocalDate birth, Gender gender, String profile, Role role, boolean isPublic) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -46,5 +48,10 @@ public class User extends BaseTime {
         this.gender = gender;
         this.profile = profile;
         this.role = role;
+        this.isPublic = isPublic;
+    }
+
+    public void changePrivacy(boolean isPublic) {
+        this.isPublic = isPublic;
     }
 }
