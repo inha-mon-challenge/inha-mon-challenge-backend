@@ -1,5 +1,6 @@
 package com.example.inhamonchallenge.domain.habit.controller;
 
+import com.example.inhamonchallenge.domain.common.PrivacySetting;
 import com.example.inhamonchallenge.domain.common.dto.Result;
 import com.example.inhamonchallenge.domain.habit.dto.HabitAndRecordResponse;
 import com.example.inhamonchallenge.domain.habit.dto.HabitResponse;
@@ -41,6 +42,12 @@ public class HabitController {
     ResponseEntity<SaveHabitResponse> habitUpdate(@ModelAttribute SaveHabitRequest request, @PathVariable Long habitId) {
         SaveHabitResponse response = habitService.updateHabit(request, habitId);
         return ResponseEntity.ok(response);
+    }
+
+    @PutMapping("/habits/{habitId}/privacy")
+    ResponseEntity<Void> habitPrivacyChange(@PathVariable Long habitId, @RequestParam PrivacySetting privacy) {
+        habitService.changeHabitPrivacy(habitId, privacy);
+        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/habits/{habitId}")
