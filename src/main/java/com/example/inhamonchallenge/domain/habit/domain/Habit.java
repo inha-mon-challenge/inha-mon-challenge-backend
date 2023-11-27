@@ -43,11 +43,11 @@ public class Habit extends BaseTime {
     private int likeCnt;
 
     @Enumerated(EnumType.STRING)
-    private PrivacySetting privacySetting;
+    private PrivacySetting privacy;
 
     @Builder
-    public Habit(Long id, User user, Category category, String content, String title, String hashtags,
-                 int totalRecordCnt, int photoRecordCnt, int currentRecordCnt, int reportCnt, int likeCnt, PrivacySetting privacySetting) {
+    public Habit(Long id, User user, Category category, String content, String title, String hashtags, int totalRecordCnt,
+                 int photoRecordCnt, int currentRecordCnt, int reportCnt, int likeCnt, PrivacySetting privacy) {
         this.id = id;
         this.user = user;
         this.category = category;
@@ -59,7 +59,7 @@ public class Habit extends BaseTime {
         this.currentRecordCnt = currentRecordCnt;
         this.reportCnt = reportCnt;
         this.likeCnt = likeCnt;
-        this.privacySetting = privacySetting;
+        this.privacy = privacy;
     }
 
     public void updateHabit(String content, String title, String category, String hashtags) {
@@ -69,8 +69,8 @@ public class Habit extends BaseTime {
         this.hashtags = hashtags;
     }
 
-    public void changePrivacy(PrivacySetting privacySetting) {
-        this.privacySetting = privacySetting;
+    public void changePrivacy(PrivacySetting privacy) {
+        this.privacy = privacy;
 
     }
 }

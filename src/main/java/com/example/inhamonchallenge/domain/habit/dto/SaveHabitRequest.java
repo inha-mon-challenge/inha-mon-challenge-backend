@@ -31,7 +31,7 @@ public class SaveHabitRequest {
                 .currentRecordCnt(0)
                 .reportCnt(0)
                 .likeCnt(0)
-                .privacySetting(PrivacySetting.PUBLIC)
+                .privacy(PrivacySetting.PUBLIC)
                 .build();
     }
 }

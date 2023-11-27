@@ -1,5 +1,6 @@
 package com.example.inhamonchallenge.domain.record.controller;
 
+import com.example.inhamonchallenge.domain.common.PrivacySetting;
 import com.example.inhamonchallenge.domain.record.dto.RecordResponse;
 import com.example.inhamonchallenge.domain.record.dto.SaveRecordRequest;
 import com.example.inhamonchallenge.domain.record.dto.SaveRecordResponse;
@@ -27,6 +28,12 @@ public class RecordController {
     ResponseEntity<SaveRecordResponse> recordAdd(@ModelAttribute SaveRecordRequest request, @PathVariable Long habitId) {
         SaveRecordResponse response = recordService.addRecord(request, habitId);
         return ResponseEntity.status(CREATED).body(response);
+    }
+
+    @PutMapping("/records/{recordId}/privacy")
+    ResponseEntity<Void> recordPrivacyChange(@PathVariable Long recordId, @RequestParam PrivacySetting privacy) {
+        recordService.changeRecordPrivacy(recordId, privacy);
+        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/records/{recordId}")

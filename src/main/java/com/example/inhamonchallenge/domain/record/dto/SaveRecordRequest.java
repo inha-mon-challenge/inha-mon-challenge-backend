@@ -26,6 +26,7 @@ public class SaveRecordRequest {
                 .hashtags(String.join(",", request.getHashTag()))
                 .reportCnt(0)
                 .likeCnt(0)
+                .privacy(habit.getPrivacy())
                 .build();
     }
 }

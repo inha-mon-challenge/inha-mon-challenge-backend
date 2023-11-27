@@ -1,6 +1,7 @@
 package com.example.inhamonchallenge.domain.record.domain;
 
 import com.example.inhamonchallenge.domain.common.BaseTime;
+import com.example.inhamonchallenge.domain.common.PrivacySetting;
 import com.example.inhamonchallenge.domain.habit.domain.Habit;
 import com.example.inhamonchallenge.domain.user.domain.User;
 import jakarta.persistence.*;
@@ -35,8 +36,12 @@ public class Record extends BaseTime {
 
     private int likeCnt;
 
+    @Enumerated(EnumType.STRING)
+    private PrivacySetting privacy;
+
     @Builder
-    public Record(Long id, Habit habit, User user, String image, String content, String hashtags, int reportCnt, int likeCnt) {
+    public Record(Long id, Habit habit, User user, String image, String content, String hashtags,
+                  int reportCnt, int likeCnt, PrivacySetting privacy) {
         this.id = id;
         this.habit = habit;
         this.user = user;
@@ -45,5 +50,10 @@ public class Record extends BaseTime {
         this.hashtags = hashtags;
         this.reportCnt = reportCnt;
         this.likeCnt = likeCnt;
+        this.privacy = privacy;
+    }
+
+    public void changePrivacy(PrivacySetting privacy) {
+        this.privacy = privacy;
     }
 }
