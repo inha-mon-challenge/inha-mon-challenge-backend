@@ -1,6 +1,7 @@
 package com.example.inhamonchallenge.domain.report.service;
 
 import com.example.inhamonchallenge.domain.common.FeedType;
+import com.example.inhamonchallenge.domain.common.ReportType;
 import com.example.inhamonchallenge.domain.habit.repository.HabitRepository;
 import com.example.inhamonchallenge.domain.record.repository.RecordRepository;
 import com.example.inhamonchallenge.domain.report.dto.ReportRequest;
@@ -12,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import static com.example.inhamonchallenge.domain.common.FeedType.*;
+import static com.example.inhamonchallenge.domain.common.ReportType.*;
 import static com.example.inhamonchallenge.global.security.SecurityUtil.*;
 
 @Service
@@ -24,15 +25,18 @@ public class ReportService {
     private final UserRepository userRepository;
 
     public void addReport(ReportRequest request) {
-        if(reportRepository.existsByFeedIdAndFeedTypeAndUserId(request.getFeedId(), request.getFeedType(), getCurrentMemberId())){
+        if(reportRepository.existsByReportedIdAndReportTypeAndUserId(request.getReportedId(), request.getReportType(), getCurrentMemberId())){
             return;
         }
         User user = userRepository.findById(getCurrentMemberId()).orElseThrow();
-        if(request.getFeedType() == HABIT){
-            reportRepository.increaseHabitReport(request.getFeedId());
+        if(request.getReportType() == HABIT){
+            reportRepository.increaseHabitReport(request.getReportedId());
         }
-        else if(request.getFeedType() == RECORD){
-            reportRepository.increaseRecordReport(request.getFeedId());
+        else if(request.getReportType() == RECORD){
+            reportRepository.increaseRecordReport(request.getReportedId());
+        }
+        else if(request.getReportType() == COMMENT){
+            reportRepository.increaseCommentReport(request.getReportedId());
         }
         reportRepository.save(request.toEntity(request, user));
     }

@@ -1,6 +1,7 @@
 package com.example.inhamonchallenge.domain.report.domain;
 
 import com.example.inhamonchallenge.domain.common.FeedType;
+import com.example.inhamonchallenge.domain.common.ReportType;
 import com.example.inhamonchallenge.domain.user.domain.User;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -21,16 +22,16 @@ public class Report {
     @JoinColumn(name = "user_id")
     private User user;
 
-    private Long feedId;
+    private Long reportedId;
 
     @Enumerated(EnumType.STRING)
-    private FeedType feedType;
+    private ReportType reportType;
 
     @Builder
-    public Report(Long id, User user, Long feedId, FeedType feedType) {
+    public Report(Long id, User user, Long reportedId, ReportType reportType) {
         this.id = id;
         this.user = user;
-        this.feedId = feedId;
-        this.feedType = feedType;
+        this.reportedId = reportedId;
+        this.reportType = reportType;
     }
 }

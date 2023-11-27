@@ -1,6 +1,7 @@
 package com.example.inhamonchallenge.domain.report.dto;
 
 import com.example.inhamonchallenge.domain.common.FeedType;
+import com.example.inhamonchallenge.domain.common.ReportType;
 import com.example.inhamonchallenge.domain.report.domain.Report;
 import com.example.inhamonchallenge.domain.user.domain.User;
 import lombok.AccessLevel;
@@ -13,14 +14,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ReportRequest {
 
-    private Long feedId;
-    private FeedType feedType;
+    private Long reportedId;
+    private ReportType reportType;
 
     public static Report toEntity(ReportRequest request, User user) {
         return Report.builder()
                 .user(user)
-                .feedId(request.getFeedId())
-                .feedType(request.getFeedType())
+                .reportedId(request.getReportedId())
+                .reportType(request.getReportType())
                 .build();
     }
 }
