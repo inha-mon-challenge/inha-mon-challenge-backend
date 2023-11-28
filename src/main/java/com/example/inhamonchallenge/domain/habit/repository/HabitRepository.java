@@ -30,13 +30,22 @@ public interface HabitRepository extends JpaRepository<Habit, Long> {
                                                       @Param("cursor") Long cursor,
                                                       @Param("loggedInUserId") Long loggedInUserId,
                                                       Pageable pageable);
+    @Query("SELECT h FROM Habit h " +
+            "WHERE FIND_IN_SET(:keyword, h.hashtags) > 0 and h.id < :cursor " +
+            "AND (h.privacy = 'PUBLIC' " +
+            "OR (h.user.id IN (SELECT f.following.id FROM Follow f WHERE f.follower.id = :loggedInUserId) AND h.privacy != 'PRIVATE')) " +
+            "ORDER BY h.id DESC")
+    Slice<Habit> searchByHashtagsForLoggedInUser(@Param("keyword") String keyword,
+                                                 @Param("cursor") Long cursor,
+                                                 @Param("loggedInUserId") Long loggedInUserId,
+                                                 Pageable pageable);
 
-    @Query(value = "SELECT h FROM Habit h WHERE FIND_IN_SET(:keyword, h.hashtags) > 0 and h.id < :cursor ORDER BY h.id DESC")
+    @Query("SELECT h FROM Habit h WHERE FIND_IN_SET(:keyword, h.hashtags) > 0 " +
+            "and h.privacy = 'PUBLIC' and h.id < :cursor ORDER BY h.id DESC")
     Slice<Habit> searchByHashtags(@Param("keyword") String keyword, @Param("cursor") Long cursor, Pageable pageable);
-    
+
+
     @Query(nativeQuery = true, value = "SELECT * FROM habit WHERE privacy = 'PUBLIC' ORDER BY RAND() LIMIT 4")
     List<Habit> findRandomHabits();
-
-
 
 }

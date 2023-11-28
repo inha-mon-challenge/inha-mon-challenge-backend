@@ -38,11 +38,16 @@ public class SearchHabitService {
                 .collect(Collectors.toList()));
     }
 
-    public Result<List<SearchHabitResponse>> searchByHashtags(String keyword, Long cursor) {
+    public Result<List<SearchHabitResponse>> searchByHashtags(String keyword, Long cursor, boolean isLoggedIn) {
         if (cursor == null) {
             cursor = Long.MAX_VALUE;
         }
-        List<Habit> habits = habitRepository.searchByHashtags(keyword.replace(" ", ""), cursor, PageRequest.of(0, 10)).getContent();
+        List<Habit> habits;
+        if (isLoggedIn) {
+            habits = habitRepository.searchByHashtagsForLoggedInUser(keyword, cursor, getCurrentMemberId(), PageRequest.of(0, 10)).getContent();
+        } else {
+            habits = habitRepository.searchByHashtags(keyword, cursor, PageRequest.of(0, 10)).getContent();
+        }
         return new Result<>(habits.stream()
                 .map(SearchHabitResponse::from)
                 .collect(Collectors.toList()));

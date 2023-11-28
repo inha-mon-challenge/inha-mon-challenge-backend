@@ -33,8 +33,10 @@ public class SearchHabitController {
 
     @GetMapping("/hashtags")
     ResponseEntity<Result<List<SearchHabitResponse>>> searchByHashtags(@RequestParam String keyword,
-                                                          @RequestParam(required = false) Long cursor) {
-        Result<List<SearchHabitResponse>> response = searchHabitService.searchByHashtags(keyword, cursor);
+                                                                       @RequestParam(required = false) Long cursor,
+                                                                       @AuthenticationPrincipal UserDetails userDetails) {
+        boolean isLoggedIn = userDetails != null;
+        Result<List<SearchHabitResponse>> response = searchHabitService.searchByHashtags(keyword, cursor, isLoggedIn);
         return ResponseEntity.ok(response);
     }
 }
