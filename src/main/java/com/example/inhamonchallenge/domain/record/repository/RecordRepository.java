@@ -22,7 +22,7 @@ public interface RecordRepository extends JpaRepository<Record, Long> {
             "and r.id < :cursor order by r.id desc")
     Slice<Record> findNonFollowingTop(@Param("userId") Long userId, @Param("cursor") Long cursor, Pageable pageable);
 
-    @Query("select r from Record r where r.id < :cursor order by r.id desc")
+    @Query("select r from Record r where r.privacy = 'PUBLIC' and r.id < :cursor order by r.id desc")
     Slice<Record> findPublicTop10(@Param("cursor") Long cursor, Pageable pageable);
 
     List<Record> findByHabitId(Long habitId);
