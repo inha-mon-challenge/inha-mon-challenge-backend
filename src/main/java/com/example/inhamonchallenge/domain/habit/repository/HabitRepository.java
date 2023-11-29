@@ -48,4 +48,8 @@ public interface HabitRepository extends JpaRepository<Habit, Long> {
     @Query(nativeQuery = true, value = "SELECT * FROM habit WHERE privacy = 'PUBLIC' ORDER BY RAND() LIMIT 4")
     List<Habit> findRandomHabits();
 
+    @Query("SELECT DISTINCT h.title FROM Habit h WHERE h.title LIKE :keyword% ORDER BY LENGTH(h.title)")
+    List<String> autoComplete(@Param("keyword") String keyword, Pageable pageable);
+
+
 }

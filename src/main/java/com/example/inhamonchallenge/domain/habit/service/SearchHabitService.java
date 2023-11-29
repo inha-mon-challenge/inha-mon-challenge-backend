@@ -52,4 +52,8 @@ public class SearchHabitService {
                 .map(SearchHabitResponse::from)
                 .collect(Collectors.toList()));
     }
+
+    public Result<List<String>> autoComplete(String keyword) {
+        return new Result<>(habitRepository.autoComplete(keyword, PageRequest.of(0, 10)));
+    }
 }

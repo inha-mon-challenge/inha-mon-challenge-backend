@@ -39,4 +39,10 @@ public class SearchHabitController {
         Result<List<SearchHabitResponse>> response = searchHabitService.searchByHashtags(keyword, cursor, isLoggedIn);
         return ResponseEntity.ok(response);
     }
+
+    @GetMapping("/autocomplete")
+    ResponseEntity<Result<List<String>>> autoComplete(@RequestParam String keyword) {
+        Result<List<String>> response = searchHabitService.autoComplete(keyword);
+        return ResponseEntity.ok(response);
+    }
 }
