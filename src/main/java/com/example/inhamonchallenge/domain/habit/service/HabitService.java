@@ -1,5 +1,6 @@
 package com.example.inhamonchallenge.domain.habit.service;
 
+import com.example.inhamonchallenge.domain.common.PrivacySetting;
 import com.example.inhamonchallenge.domain.common.dto.Result;
 import com.example.inhamonchallenge.domain.common.exception.DeleteDeniedException;
 import com.example.inhamonchallenge.domain.common.exception.UpdateDeniedException;
@@ -95,5 +96,14 @@ public class HabitService {
         } else {
             return new String[0];
         }
+    }
+
+    public void changeHabitPrivacy(Long habitId, PrivacySetting privacySetting) {
+        User user = userRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(NotFoundUserException::new);
+        Habit habit = habitRepository.findById(habitId).orElseThrow(NotFoundHabitException::new);
+        if (habit.getUser().getId() != user.getId()) {
+            throw new UpdateDeniedException();
+        }
+        habit.changePrivacy(privacySetting);
     }
 }

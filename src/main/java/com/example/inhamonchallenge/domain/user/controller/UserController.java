@@ -4,10 +4,7 @@ import com.example.inhamonchallenge.domain.user.dto.UserResponse;
 import com.example.inhamonchallenge.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/users")
@@ -20,5 +17,11 @@ public class UserController {
     ResponseEntity<UserResponse> userDetail(@PathVariable Long userId) {
         UserResponse response = userService.getUser(userId);
         return ResponseEntity.ok(response);
+    }
+
+    @PutMapping("/privacy")
+    ResponseEntity<Void> changePrivacy(@RequestParam boolean isPublic) {
+        userService.changePrivacy(isPublic);
+        return ResponseEntity.noContent().build();
     }
 }

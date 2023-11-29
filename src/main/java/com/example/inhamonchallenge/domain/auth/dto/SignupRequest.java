@@ -19,7 +19,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class SignupRequest {
     @NotBlank(message = "이메일 입력은 필수입니다.")
-    @Pattern(regexp = "^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@(inha.edu|inha.ac.kr)$", message = "잘못된 형식이거나 허용되지 않는 도메인입니다.")
+    @Pattern(regexp = "^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@(inha.edu|inha.ac.kr)$", message = "잘못된 형식이거나 허용되지 않는 이메일입니다.")
     private String email;
 
 
@@ -39,6 +39,7 @@ public class SignupRequest {
                 .birth(birth)
                 .gender(Gender.valueOf(gender.toUpperCase()))
                 .role(Role.ROLE_USER)
+                .isPublic(true)
                 .build();
     }
 }

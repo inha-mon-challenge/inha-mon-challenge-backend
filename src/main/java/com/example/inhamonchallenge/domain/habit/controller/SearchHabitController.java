@@ -6,6 +6,8 @@ import com.example.inhamonchallenge.domain.habit.dto.SearchHabitResponse;
 import com.example.inhamonchallenge.domain.habit.service.SearchHabitService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,15 +24,19 @@ public class SearchHabitController {
 
     @GetMapping
     ResponseEntity<Result<List<SearchHabitResponse>>> searchHabit(@RequestParam String keyword,
-                                                                  @RequestParam(required = false) Long cursor) {
-        Result<List<SearchHabitResponse>> response = searchHabitService.searchHabit(keyword, cursor);
+                                                                  @RequestParam(required = false) Long cursor,
+                                                                  @AuthenticationPrincipal UserDetails userDetails) {
+        boolean isLoggedIn = userDetails != null;
+        Result<List<SearchHabitResponse>> response = searchHabitService.searchHabit(keyword, cursor, isLoggedIn);
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/hashtags")
     ResponseEntity<Result<List<SearchHabitResponse>>> searchByHashtags(@RequestParam String keyword,
-                                                          @RequestParam(required = false) Long cursor) {
-        Result<List<SearchHabitResponse>> response = searchHabitService.searchByHashtags(keyword, cursor);
+                                                                       @RequestParam(required = false) Long cursor,
+                                                                       @AuthenticationPrincipal UserDetails userDetails) {
+        boolean isLoggedIn = userDetails != null;
+        Result<List<SearchHabitResponse>> response = searchHabitService.searchByHashtags(keyword, cursor, isLoggedIn);
         return ResponseEntity.ok(response);
     }
 }

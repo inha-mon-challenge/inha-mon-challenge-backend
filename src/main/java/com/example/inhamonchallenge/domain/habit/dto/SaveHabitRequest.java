@@ -1,6 +1,7 @@
 package com.example.inhamonchallenge.domain.habit.dto;
 
 import com.example.inhamonchallenge.domain.common.Category;
+import com.example.inhamonchallenge.domain.common.PrivacySetting;
 import com.example.inhamonchallenge.domain.habit.domain.Habit;
 import com.example.inhamonchallenge.domain.user.domain.User;
 import lombok.AllArgsConstructor;
@@ -30,6 +31,7 @@ public class SaveHabitRequest {
                 .currentRecordCnt(0)
                 .reportCnt(0)
                 .likeCnt(0)
+                .privacy(PrivacySetting.PUBLIC)
                 .build();
     }
 }
