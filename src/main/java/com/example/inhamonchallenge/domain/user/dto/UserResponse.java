@@ -18,6 +18,7 @@ public class UserResponse {
     private LocalDate birth;
     private Gender gender;
     private String profile;
+    private boolean isPublic;
 
     public static UserResponse from(User user) {
         return UserResponse.builder()
@@ -27,6 +28,7 @@ public class UserResponse {
                 .birth(user.getBirth())
                 .gender(user.getGender())
                 .profile(user.getProfile())
+                .isPublic(user.isPublic())
                 .build();
     }
 }
