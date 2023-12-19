@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api/users")
 @RequiredArgsConstructor
@@ -22,6 +24,12 @@ public class UserController {
     @PutMapping("/privacy")
     ResponseEntity<Void> changePrivacy(@RequestParam boolean isPublic) {
         userService.changePrivacy(isPublic);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/verify-password")
+    ResponseEntity<Void> verifyPassword(@RequestBody Map<String, String> payload) {
+        userService.verifyPassword(payload.get("password"));
         return ResponseEntity.noContent().build();
     }
 }
