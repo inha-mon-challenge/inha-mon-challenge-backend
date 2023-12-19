@@ -21,9 +21,9 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
-    @PutMapping("/privacy")
-    ResponseEntity<Void> changePrivacy(@RequestParam boolean isPublic) {
-        userService.changePrivacy(isPublic);
+    @GetMapping("/check-name")
+    ResponseEntity<Void> checknameDuplicate(@RequestParam String name) {
+        userService.checkNameDuplicate(name);
         return ResponseEntity.noContent().build();
     }
 
@@ -32,4 +32,11 @@ public class UserController {
         userService.verifyPassword(payload.get("password"));
         return ResponseEntity.noContent().build();
     }
+
+    @PutMapping("/privacy")
+    ResponseEntity<Void> changePrivacy(@RequestParam boolean isPublic) {
+        userService.changePrivacy(isPublic);
+        return ResponseEntity.noContent().build();
+    }
+
 }

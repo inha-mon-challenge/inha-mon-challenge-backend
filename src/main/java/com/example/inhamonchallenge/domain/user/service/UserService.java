@@ -1,6 +1,7 @@
 package com.example.inhamonchallenge.domain.user.service;
 
 import com.example.inhamonchallenge.domain.user.dto.UserResponse;
+import com.example.inhamonchallenge.domain.user.exception.ExistUsernameException;
 import com.example.inhamonchallenge.domain.user.exception.InvalidPasswordException;
 import com.example.inhamonchallenge.domain.user.exception.NotFoundUserException;
 import com.example.inhamonchallenge.domain.user.repository.UserRepository;
@@ -23,8 +24,10 @@ public class UserService {
         return UserResponse.from(userRepository.findById(userId).orElseThrow(NotFoundUserException::new));
     }
 
-    public void changePrivacy(boolean isPublic) {
-        userRepository.findById(getCurrentMemberId()).ifPresent(user -> user.changePrivacy(isPublic));
+    public void checkNameDuplicate(String name) {
+        userRepository.findByName(name).ifPresent(user -> {
+            throw new ExistUsernameException();
+        });
     }
 
     public void verifyPassword(String password) {
@@ -34,4 +37,10 @@ public class UserService {
             }
         });
     }
+
+    public void changePrivacy(boolean isPublic) {
+        userRepository.findById(getCurrentMemberId()).ifPresent(user -> user.changePrivacy(isPublic));
+    }
+
+
 }
