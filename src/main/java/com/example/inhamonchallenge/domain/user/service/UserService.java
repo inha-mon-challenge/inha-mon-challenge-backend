@@ -3,6 +3,7 @@ package com.example.inhamonchallenge.domain.user.service;
 import com.example.inhamonchallenge.domain.user.dto.UserResponse;
 import com.example.inhamonchallenge.domain.user.exception.ExistUsernameException;
 import com.example.inhamonchallenge.domain.user.exception.InvalidPasswordException;
+import com.example.inhamonchallenge.domain.user.exception.InvalidUsernameException;
 import com.example.inhamonchallenge.domain.user.exception.NotFoundUserException;
 import com.example.inhamonchallenge.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +29,13 @@ public class UserService {
         userRepository.findByName(name).ifPresent(user -> {
             throw new ExistUsernameException();
         });
+    }
+
+    public void changeName(String name) {
+        if(name.length() < 2 || name.length() > 10) {
+            throw new InvalidUsernameException();
+        }
+        userRepository.findById(getCurrentMemberId()).ifPresent(user -> user.changeName(name));
     }
 
     public void verifyPassword(String password) {

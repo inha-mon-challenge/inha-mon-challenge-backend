@@ -56,6 +56,10 @@ public class User extends BaseTime {
         this.isPublic = isPublic;
     }
 
+    public void changeName(String name) {
+        this.name = name;
+    }
+
     public void changePassword(PasswordEncoder encoder, String password) {
         this.password = encoder.encode(password);
     }

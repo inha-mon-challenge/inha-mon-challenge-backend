@@ -29,6 +29,12 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
+    @PostMapping("/change-name")
+    ResponseEntity<Void> changeName(@RequestParam String name) {
+        userService.changeName(name);
+        return ResponseEntity.noContent().build();
+    }
+
     @PostMapping("/verify-password")
     ResponseEntity<Void> verifyPassword(@Valid @RequestBody PasswordRequest request) {
         userService.verifyPassword(request.getPassword());

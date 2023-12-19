@@ -19,6 +19,7 @@ public enum ErrorCode {
     NOT_FOUND_USER_EXCEPTION(404, "존재하지 않는 사용자입니다.", NOT_FOUND),
     EXIST_EMAIL_EXCEPTION(409, "이미 가입 된 이메일입니다.", HttpStatus.CONFLICT),
     EXIST_USERNAME_EXCEPTION(409, "이미 가입 된 닉네임입니다.", HttpStatus.CONFLICT),
+    INVALID_USERNAME_EXCEPTION(400, "닉네임은 2자 이상 10자 이하로 입력해주세요.", HttpStatus.BAD_REQUEST),
     INVALID_PASSWORD_EXCEPTION(401, "비밀번호가 일치하지 않습니다.", HttpStatus.UNAUTHORIZED),
     //댓글
     NOT_FOUND_COMMENT_EXCEPTION(404, "존재하지 않는 댓글입니다.", NOT_FOUND),
