@@ -8,6 +8,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDate;
 
@@ -53,5 +54,9 @@ public class User extends BaseTime {
 
     public void changePrivacy(boolean isPublic) {
         this.isPublic = isPublic;
+    }
+
+    public void changePassword(PasswordEncoder encoder, String password) {
+        this.password = encoder.encode(password);
     }
 }

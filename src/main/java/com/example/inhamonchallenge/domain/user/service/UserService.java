@@ -38,6 +38,10 @@ public class UserService {
         });
     }
 
+    public void changePassword(String password) {
+        userRepository.findById(getCurrentMemberId()).ifPresent(user -> user.changePassword(passwordEncoder, password));
+    }
+
     public void changePrivacy(boolean isPublic) {
         userRepository.findById(getCurrentMemberId()).ifPresent(user -> user.changePrivacy(isPublic));
     }

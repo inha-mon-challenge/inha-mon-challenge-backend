@@ -1,7 +1,9 @@
 package com.example.inhamonchallenge.domain.user.controller;
 
+import com.example.inhamonchallenge.domain.user.dto.PasswordRequest;
 import com.example.inhamonchallenge.domain.user.dto.UserResponse;
 import com.example.inhamonchallenge.domain.user.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,14 +24,20 @@ public class UserController {
     }
 
     @GetMapping("/check-name")
-    ResponseEntity<Void> checknameDuplicate(@RequestParam String name) {
+    ResponseEntity<Void> checkNameDuplicate(@RequestParam String name) {
         userService.checkNameDuplicate(name);
         return ResponseEntity.noContent().build();
     }
 
     @PostMapping("/verify-password")
-    ResponseEntity<Void> verifyPassword(@RequestBody Map<String, String> payload) {
-        userService.verifyPassword(payload.get("password"));
+    ResponseEntity<Void> verifyPassword(@Valid @RequestBody PasswordRequest request) {
+        userService.verifyPassword(request.getPassword());
+        return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/change-password")
+    ResponseEntity<Void> changePassword(@Valid @RequestBody PasswordRequest request) {
+        userService.changePassword(request.getPassword());
         return ResponseEntity.noContent().build();
     }
 
