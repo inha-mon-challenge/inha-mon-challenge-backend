@@ -8,8 +8,10 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Entity
@@ -38,8 +40,13 @@ public class User extends BaseTime {
 
     private boolean isPublic;
 
+    private boolean isDeleted;
+
+    private LocalDateTime deletedAt;
+
     @Builder
-    public User(Long id, String name, String email, String password, LocalDate birth, Gender gender, String profile, Role role, boolean isPublic) {
+    public User(Long id, String name, String email, String password, LocalDate birth,
+                Gender gender, String profile, Role role, boolean isPublic, boolean isDeleted) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -49,9 +56,27 @@ public class User extends BaseTime {
         this.profile = profile;
         this.role = role;
         this.isPublic = isPublic;
+        this.isDeleted = isDeleted;
     }
 
     public void changePrivacy(boolean isPublic) {
         this.isPublic = isPublic;
+    }
+
+    public void changeName(String name) {
+        this.name = name;
+    }
+
+    public void changePassword(PasswordEncoder encoder, String password) {
+        this.password = encoder.encode(password);
+    }
+
+    public void changeDeletedStatus(boolean isDeleted) {
+        this.isDeleted = isDeleted;
+        this.deletedAt = isDeleted ? LocalDateTime.now() : null;
+    }
+
+    public void changeProfile(String profile) {
+        this.profile = profile;
     }
 }

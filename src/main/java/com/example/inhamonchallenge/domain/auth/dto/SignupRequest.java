@@ -40,6 +40,7 @@ public class SignupRequest {
                 .gender(Gender.valueOf(gender.toUpperCase()))
                 .role(Role.ROLE_USER)
                 .isPublic(true)
+                .isDeleted(false)
                 .build();
     }
 }

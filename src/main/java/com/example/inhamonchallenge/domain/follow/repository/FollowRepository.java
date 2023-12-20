@@ -13,12 +13,16 @@ import java.util.Optional;
 public interface FollowRepository extends JpaRepository<Follow, Long> {
     boolean existsByFollowerIdAndFollowingId(Long currentMemberId, Long userId);
 
-    @Query("SELECT f.following FROM Follow f WHERE f.follower.id = :userId AND f.status = 'ACCEPTED'")
+    @Query("SELECT f.following FROM Follow f WHERE f.follower.id = :userId " +
+            "AND f.status = 'ACCEPTED' AND f.following.isDeleted = false")
     List<User> findAcceptedFollowingByUserId(@Param("userId") Long userId);
 
-    @Query("SELECT f.follower FROM Follow f WHERE f.following.id = :userId AND f.status = 'ACCEPTED'")
+    @Query("SELECT f.follower FROM Follow f WHERE f.following.id = :userId " +
+            "AND f.status = 'ACCEPTED' AND f.follower.isDeleted = false")
     List<User> findAllByFollowingId(@Param("userId") Long userId);
 
-    @Query("SELECT f FROM Follow f WHERE f.following.id = :userId AND f.status = 'PENDING'")
+    @Query("SELECT f FROM Follow f WHERE f.following.id = :userId AND f.status = 'PENDING' AND f.follower.isDeleted = false")
     List<Follow> findAllByFollowingIdAndStatus(@Param("userId") Long userId);
+
+    void deleteByFollowerIdOrFollowingId(Long id, Long id1);
 }

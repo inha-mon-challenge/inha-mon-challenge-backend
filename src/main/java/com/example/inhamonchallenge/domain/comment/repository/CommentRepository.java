@@ -12,4 +12,6 @@ import java.util.List;
 public interface CommentRepository extends JpaRepository<Comment, Long> {
 
     List<Comment> findByFeedTypeAndFeedIdAndParentIsNullOrderByCreatedAt(FeedType feedType, Long feedId);
+
+    void deleteByUserId(Long id);
 }
