@@ -75,4 +75,8 @@ public class User extends BaseTime {
         this.isDeleted = isDeleted;
         this.deletedAt = isDeleted ? LocalDateTime.now() : null;
     }
+
+    public void changeProfile(String profile) {
+        this.profile = profile;
+    }
 }

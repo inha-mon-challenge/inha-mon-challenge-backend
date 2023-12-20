@@ -54,6 +54,12 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
+    @PutMapping("/change-profile")
+    ResponseEntity<Void> changeProfile(@RequestParam String profile) {
+        userService.changeProfile(profile);
+        return ResponseEntity.noContent().build();
+    }
+
     @DeleteMapping
     ResponseEntity<Void> deleteUser() {
         userService.deleteUser();
