@@ -5,9 +5,7 @@ import com.example.inhamonchallenge.domain.alarm.service.AlarmService;
 import com.example.inhamonchallenge.domain.common.dto.Result;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,6 +19,12 @@ public class AlarmController {
     @GetMapping
     ResponseEntity<Result<List<AlarmResponse>>> getAlarms() {
         return ResponseEntity.ok(alarmService.getAlarms());
+    }
+
+    @PutMapping("/read")
+    ResponseEntity<Void> readAlarms(@RequestParam Long alarmId) {
+        alarmService.readAlarms(alarmId);
+        return ResponseEntity.noContent().build();
     }
 
 }

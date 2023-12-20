@@ -39,6 +39,8 @@ public enum ErrorCode {
     //팔로우
     EXIST_FOLLOW_EXCEPTION(409, "이미 팔로우한 유저입니다.", HttpStatus.CONFLICT),
     NOT_FOUND_FOLLOW_EXCEPTION(404, "존재하지 않는 팔로우입니다.", NOT_FOUND),
+    //알림
+    NOT_FOUND_ALARM_EXCEPTION(404, "존재하지 않는 알림입니다.", NOT_FOUND),
     //공통
     UPDATE_DENIED_EXCEPTION(403, "수정 권한이 없습니다.", FORBIDDEN),
     DELETE_DENIED_EXCEPTION(403, "삭제 권한이 없습니다.", FORBIDDEN),

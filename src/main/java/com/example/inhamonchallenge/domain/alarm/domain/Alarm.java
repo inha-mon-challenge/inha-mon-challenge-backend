@@ -31,12 +31,15 @@ public class Alarm extends BaseCreateTime {
     private boolean isRead;
 
     @Builder
-
     public Alarm(Long id, User sendUser, User receiveUser, AlarmStatus status, boolean isRead) {
         this.id = id;
         this.sendUser = sendUser;
         this.receiveUser = receiveUser;
         this.status = status;
         this.isRead = isRead;
+    }
+
+    public void changeReadStatus() {
+        this.isRead = true;
     }
 }

@@ -3,11 +3,10 @@ package com.example.inhamonchallenge.domain.alarm.service;
 import com.example.inhamonchallenge.domain.alarm.domain.Alarm;
 import com.example.inhamonchallenge.domain.alarm.domain.AlarmStatus;
 import com.example.inhamonchallenge.domain.alarm.dto.AlarmResponse;
+import com.example.inhamonchallenge.domain.alarm.exception.NotFoundAlarmException;
 import com.example.inhamonchallenge.domain.alarm.repository.AlarmRepository;
 import com.example.inhamonchallenge.domain.common.dto.Result;
 import com.example.inhamonchallenge.domain.user.domain.User;
-import com.example.inhamonchallenge.domain.user.repository.UserRepository;
-import com.example.inhamonchallenge.global.security.SecurityUtil;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -43,5 +42,10 @@ public class AlarmService {
                 .map(AlarmResponse::of)
                 .collect(toList());
         return new Result<>(responses);
+    }
+
+    public void readAlarms(Long alarmId) {
+        Alarm alarm = alarmRepository.findById(alarmId).orElseThrow(NotFoundAlarmException::new);
+        alarm.changeReadStatus();
     }
 }
