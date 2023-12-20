@@ -1,5 +1,6 @@
 package com.example.inhamonchallenge.domain.user.service;
 
+import com.example.inhamonchallenge.domain.auth.repository.RefreshTokenRepository;
 import com.example.inhamonchallenge.domain.user.dto.UserResponse;
 import com.example.inhamonchallenge.domain.user.exception.ExistUsernameException;
 import com.example.inhamonchallenge.domain.user.exception.InvalidPasswordException;
@@ -19,6 +20,7 @@ import static com.example.inhamonchallenge.global.security.SecurityUtil.getCurre
 public class UserService {
 
     private final UserRepository userRepository;
+    private final RefreshTokenRepository refreshTokenRepository;
     private final PasswordEncoder passwordEncoder;
 
     public UserResponse getUser(Long userId) {
@@ -32,7 +34,7 @@ public class UserService {
     }
 
     public void changeName(String name) {
-        if(name.length() < 2 || name.length() > 10) {
+        if (name.length() < 2 || name.length() > 10) {
             throw new InvalidUsernameException();
         }
         userRepository.findById(getCurrentMemberId()).ifPresent(user -> user.changeName(name));
@@ -55,4 +57,8 @@ public class UserService {
     }
 
 
+    public void deleteUser() {
+        userRepository.findById(getCurrentMemberId()).ifPresent(user -> user.changeDeletedStatus(true));
+        refreshTokenRepository.deleteByKey(getCurrentMemberId().toString());
+    }
 }

@@ -47,9 +47,16 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
+
     @PutMapping("/privacy")
     ResponseEntity<Void> changePrivacy(@RequestParam boolean isPublic) {
         userService.changePrivacy(isPublic);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping
+    ResponseEntity<Void> deleteUser() {
+        userService.deleteUser();
         return ResponseEntity.noContent().build();
     }
 
