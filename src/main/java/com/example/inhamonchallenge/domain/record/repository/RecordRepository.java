@@ -30,4 +30,6 @@ public interface RecordRepository extends JpaRepository<Record, Long> {
     Slice<Record> findPublicTop10(@Param("cursor") Long cursor, Pageable pageable);
 
     List<Record> findByHabitId(Long habitId);
+
+    void deleteByUserId(Long id);
 }

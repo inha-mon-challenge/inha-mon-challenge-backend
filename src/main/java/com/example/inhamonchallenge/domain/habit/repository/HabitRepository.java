@@ -78,4 +78,6 @@ public interface HabitRepository extends JpaRepository<Habit, Long> {
                                       @Param("loggedInUserId") Long loggedInUserId,
                                       @Param("oneDayAgo") LocalDateTime oneDayAgo,
                                       Pageable pageable);
+
+    void deleteByUserId(Long id);
 }
