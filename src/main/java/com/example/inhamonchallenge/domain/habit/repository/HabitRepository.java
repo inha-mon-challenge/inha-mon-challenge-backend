@@ -54,7 +54,7 @@ public interface HabitRepository extends JpaRepository<Habit, Long> {
 
 
     @Query(nativeQuery = true, value = "SELECT h.* FROM habit h INNER JOIN user u ON h.user_id = u.id " +
-            "WHERE h.privacy = 'PUBLIC' AND u.isDeleted = false ORDER BY RAND() LIMIT 4")
+            "WHERE h.privacy = 'PUBLIC' AND u.is_deleted = false ORDER BY RAND() LIMIT 4")
     List<Habit> findRandomHabits();
 
 
