@@ -1,5 +1,7 @@
 package com.example.inhamonchallenge.domain.follow.service;
 
+import com.example.inhamonchallenge.domain.alarm.domain.AlarmStatus;
+import com.example.inhamonchallenge.domain.alarm.service.AlarmService;
 import com.example.inhamonchallenge.domain.common.dto.Result;
 import com.example.inhamonchallenge.domain.follow.controller.FollowStatus;
 import com.example.inhamonchallenge.domain.follow.domain.Follow;
@@ -29,6 +31,7 @@ public class FollowService {
 
     private final FollowRepository followRepository;
     private final UserRepository userRepository;
+    private final AlarmService alarmService;
 
     public Result<List<FollowingUserResponse>> getFollowings(Long userId) {
         userRepository.findById(userId).orElseThrow(NotFoundUserException::new);
@@ -75,6 +78,8 @@ public class FollowService {
                 .following(following)
                 .status(FollowStatus.PENDING)
                 .build();
+
+        alarmService.sendAlarm(follower, following, AlarmStatus.FOLLOW_REQUEST);
 
         return FollowResponse.from(followRepository.save(follow).getId(), currentMemberId, userId);
     }

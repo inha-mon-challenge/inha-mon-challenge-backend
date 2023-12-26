@@ -1,14 +1,18 @@
 package com.example.inhamonchallenge.domain.user.controller;
 
 import com.example.inhamonchallenge.domain.user.dto.PasswordRequest;
+import com.example.inhamonchallenge.domain.user.dto.UserIdResponse;
 import com.example.inhamonchallenge.domain.user.dto.UserResponse;
 import com.example.inhamonchallenge.domain.user.service.UserService;
+import com.example.inhamonchallenge.global.security.SecurityUtil;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
+
+import static com.example.inhamonchallenge.global.security.SecurityUtil.*;
 
 @RestController
 @RequestMapping("/api/users")
@@ -27,6 +31,11 @@ public class UserController {
     ResponseEntity<Void> checkNameDuplicate(@RequestParam String name) {
         userService.checkNameDuplicate(name);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/current")
+    ResponseEntity<UserIdResponse> getCurrentUser() {
+        return ResponseEntity.ok(UserIdResponse.from(getCurrentMemberId()));
     }
 
     @PostMapping("/change-name")
