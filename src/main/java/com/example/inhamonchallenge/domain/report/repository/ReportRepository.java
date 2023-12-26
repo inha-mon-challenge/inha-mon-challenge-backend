@@ -1,7 +1,6 @@
 package com.example.inhamonchallenge.domain.report.repository;
 
-import com.example.inhamonchallenge.domain.common.FeedType;
-import com.example.inhamonchallenge.domain.common.ReportType;
+import com.example.inhamonchallenge.domain.report.domain.ReportType;
 import com.example.inhamonchallenge.domain.report.domain.Report;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
