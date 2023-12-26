@@ -1,7 +1,7 @@
 package com.example.inhamonchallenge.domain.report.dto;
 
-import com.example.inhamonchallenge.domain.common.FeedType;
-import com.example.inhamonchallenge.domain.common.ReportType;
+import com.example.inhamonchallenge.domain.report.domain.ReportDescription;
+import com.example.inhamonchallenge.domain.report.domain.ReportType;
 import com.example.inhamonchallenge.domain.report.domain.Report;
 import com.example.inhamonchallenge.domain.user.domain.User;
 import lombok.AccessLevel;
@@ -16,12 +16,14 @@ public class ReportRequest {
 
     private Long reportedId;
     private ReportType reportType;
+    private String reportDescription;
 
     public static Report toEntity(ReportRequest request, User user) {
         return Report.builder()
                 .user(user)
                 .reportedId(request.getReportedId())
                 .reportType(request.getReportType())
+                .reportDescription(ReportDescription.fromString(request.getReportDescription()))
                 .build();
     }
 }

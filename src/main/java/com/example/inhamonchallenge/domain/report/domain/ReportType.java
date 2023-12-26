@@ -1,4 +1,4 @@
-package com.example.inhamonchallenge.domain.common;
+package com.example.inhamonchallenge.domain.report.domain;
 
 import lombok.RequiredArgsConstructor;
 
