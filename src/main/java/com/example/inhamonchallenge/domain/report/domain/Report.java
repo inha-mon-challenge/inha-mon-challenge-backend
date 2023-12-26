@@ -28,13 +28,17 @@ public class Report {
     @Enumerated(EnumType.STRING)
     private ReportDescription reportDescription;
 
+    private String additionalDescription;
+
 
     @Builder
-    public Report(Long id, User user, Long reportedId, ReportType reportType, ReportDescription reportDescription) {
+
+    public Report(Long id, User user, Long reportedId, ReportType reportType, ReportDescription reportDescription, String additionalDescription) {
         this.id = id;
         this.user = user;
         this.reportedId = reportedId;
         this.reportType = reportType;
         this.reportDescription = reportDescription;
+        this.additionalDescription = additionalDescription;
     }
 }
