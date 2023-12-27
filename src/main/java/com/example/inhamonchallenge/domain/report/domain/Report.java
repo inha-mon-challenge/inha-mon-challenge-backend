@@ -32,7 +32,6 @@ public class Report {
 
 
     @Builder
-
     public Report(Long id, User user, Long reportedId, ReportType reportType, ReportDescription reportDescription, String additionalDescription) {
         this.id = id;
         this.user = user;

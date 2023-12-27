@@ -30,6 +30,9 @@ public class Habit extends BaseTime {
 
     private String content;
 
+    @Enumerated(EnumType.STRING)
+    private Frequency frequency;
+
     private String hashtags;
 
     private int totalRecordCnt;
@@ -46,13 +49,15 @@ public class Habit extends BaseTime {
     private PrivacySetting privacy;
 
     @Builder
-    public Habit(Long id, User user, Category category, String content, String title, String hashtags, int totalRecordCnt,
-                 int photoRecordCnt, int currentRecordCnt, int reportCnt, int likeCnt, PrivacySetting privacy) {
+    public Habit(Long id, User user, Category category, String title, String content,
+                 Frequency frequency, String hashtags, int totalRecordCnt, int photoRecordCnt,
+                 int currentRecordCnt, int reportCnt, int likeCnt, PrivacySetting privacy) {
         this.id = id;
         this.user = user;
         this.category = category;
-        this.content = content;
         this.title = title;
+        this.content = content;
+        this.frequency = frequency;
         this.hashtags = hashtags;
         this.totalRecordCnt = totalRecordCnt;
         this.photoRecordCnt = photoRecordCnt;

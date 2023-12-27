@@ -1,6 +1,7 @@
 package com.example.inhamonchallenge.domain.habit.dto;
 
 import com.example.inhamonchallenge.domain.common.Category;
+import com.example.inhamonchallenge.domain.habit.domain.Frequency;
 import com.example.inhamonchallenge.domain.habit.domain.Habit;
 import lombok.*;
 
@@ -20,6 +21,8 @@ public class SaveHabitResponse {
 
     private Category category;
 
+    private Frequency frequency;
+
     private String title;
 
     private String content;
@@ -33,6 +36,7 @@ public class SaveHabitResponse {
                 .habitId(habit.getId())
                 .username(habit.getUser().getName())
                 .category(habit.getCategory())
+                .frequency(habit.getFrequency())
                 .content(habit.getContent())
                 .title(habit.getTitle())
                 .hashtag(Arrays.asList(habit.getHashtags().split(",")))
