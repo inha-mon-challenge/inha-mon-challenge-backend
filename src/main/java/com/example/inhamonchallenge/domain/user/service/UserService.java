@@ -1,6 +1,7 @@
 package com.example.inhamonchallenge.domain.user.service;
 
 import com.example.inhamonchallenge.domain.auth.repository.RefreshTokenRepository;
+import com.example.inhamonchallenge.domain.comment.exception.DeletedUserException;
 import com.example.inhamonchallenge.domain.user.dto.UserResponse;
 import com.example.inhamonchallenge.domain.user.exception.ExistUsernameException;
 import com.example.inhamonchallenge.domain.user.exception.InvalidPasswordException;
@@ -11,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 import static com.example.inhamonchallenge.global.security.SecurityUtil.getCurrentMemberId;
 
@@ -24,6 +27,10 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
 
     public UserResponse getUser(Long userId) {
+        Optional<Boolean> userDeleted = userRepository.isUserDeleted(userId);
+        if (userDeleted.isPresent() && userDeleted.get()) {
+            throw new DeletedUserException();
+        }
         return UserResponse.from(userRepository.findById(userId).orElseThrow(NotFoundUserException::new));
     }
 

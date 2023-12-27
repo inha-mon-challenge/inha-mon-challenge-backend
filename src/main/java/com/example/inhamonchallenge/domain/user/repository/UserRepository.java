@@ -23,4 +23,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("SELECT u FROM User u WHERE u.isDeleted = true AND u.deletedAt < :threeMonthsAgo")
     List<User> findDeletedUsersOlderThanThreeMonths(@Param("threeMonthsAgo") LocalDateTime threeMonthsAgo);
 
+    @Query("SELECT u.isDeleted FROM User u WHERE u.id = :id")
+    Optional<Boolean> isUserDeleted(@Param("id") Long id);
 }
