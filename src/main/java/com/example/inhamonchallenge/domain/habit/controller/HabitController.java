@@ -10,6 +10,8 @@ import com.example.inhamonchallenge.domain.habit.service.HabitService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,8 +29,10 @@ public class HabitController {
     }
 
     @GetMapping("/users/{userId}/habits")
-    ResponseEntity<Result<List<HabitAndRecordResponse>>> habitList(@PathVariable Long userId) {
-        Result<List<HabitAndRecordResponse>> response = habitService.getAllHabitsAndRecordsByUserId(userId);
+    ResponseEntity<Result<List<HabitAndRecordResponse>>> habitList(@PathVariable Long userId,
+                                                                   @AuthenticationPrincipal UserDetails userDetails) {
+        boolean isLoggedIn = userDetails != null;
+        Result<List<HabitAndRecordResponse>> response = habitService.getAllHabitsAndRecordsByUserId(userId, isLoggedIn);
         return ResponseEntity.ok(response);
     }
 

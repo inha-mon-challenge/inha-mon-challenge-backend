@@ -4,6 +4,7 @@ import com.example.inhamonchallenge.domain.common.PrivacySetting;
 import com.example.inhamonchallenge.domain.common.dto.Result;
 import com.example.inhamonchallenge.domain.common.exception.DeleteDeniedException;
 import com.example.inhamonchallenge.domain.common.exception.UpdateDeniedException;
+import com.example.inhamonchallenge.domain.follow.repository.FollowRepository;
 import com.example.inhamonchallenge.domain.habit.domain.Habit;
 import com.example.inhamonchallenge.domain.habit.dto.HabitAndRecordResponse;
 import com.example.inhamonchallenge.domain.habit.dto.HabitResponse;
@@ -27,6 +28,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static com.example.inhamonchallenge.global.security.SecurityUtil.*;
+
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -35,6 +38,7 @@ public class HabitService {
     private final HabitRepository habitRepository;
     private final RecordRepository recordRepository;
     private final UserRepository userRepository;
+    private final FollowRepository followRepository;
 
     public HabitAndRecordResponse getHabit(Long habitId) {
         Habit habit = habitRepository.findById(habitId).orElseThrow(NotFoundHabitException::new);
@@ -43,24 +47,41 @@ public class HabitService {
     }
 
     public SaveHabitResponse addHabit(SaveHabitRequest request) {
-        User user = userRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(NotFoundUserException::new);
+        User user = userRepository.findById(getCurrentMemberId()).orElseThrow(NotFoundUserException::new);
         Habit habit = SaveHabitRequest.toEntity(request, user);
         Habit savedHabit = habitRepository.save(habit);
         return SaveHabitResponse.from(savedHabit);
     }
 
-    public Result<List<HabitAndRecordResponse>> getAllHabitsAndRecordsByUserId(Long userId) {
+    public Result<List<HabitAndRecordResponse>> getAllHabitsAndRecordsByUserId(Long userId, boolean isLoggedIn) {
         userRepository.findById(userId).orElseThrow(NotFoundUserException::new);
-        List<Object[]> results = habitRepository.findHabitsAndRecordsByUserId(userId);
+        List<Object[]> results;
+        if (isLoggedIn) {
+            boolean isFollow = followRepository.existsByFollowerIdAndFollowingId(getCurrentMemberId(), userId);
+            if (isFollow) {
+                results = habitRepository.findFollowHabitsAndRecordsByUserId(userId);
+            } else {
+                results = habitRepository.findPublicHabitsAndRecordsByUserId(userId);
+            }
+        } else {
+            results = habitRepository.findPublicHabitsAndRecordsByUserId(userId);
+        }
 
         Map<Habit, List<Record>> mp = new HashMap<>();
         for (Object[] result : results) {
             Habit habit = (Habit) result[0];
             Record record = (Record) result[1];
-            if (!mp.containsKey(habit)) {
-                mp.put(habit, new ArrayList<>(List.of(record)));
+
+            if(record != null) {
+                if (!mp.containsKey(habit)) {
+                    mp.put(habit, new ArrayList<>(List.of(record)));
+                } else {
+                    mp.get(habit).add(record);
+                }
             } else {
-                mp.get(habit).add(record);
+                if (!mp.containsKey(habit)) {
+                    mp.put(habit, new ArrayList<>());
+                }
             }
         }
 
@@ -72,7 +93,7 @@ public class HabitService {
     }
 
     public SaveHabitResponse updateHabit(SaveHabitRequest request, Long habitId) {
-        User user = userRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(NotFoundUserException::new);
+        User user = userRepository.findById(getCurrentMemberId()).orElseThrow(NotFoundUserException::new);
         Habit habit = habitRepository.findById(habitId).orElseThrow(NotFoundHabitException::new);
         if (habit.getUser().getId() != user.getId()) {
             throw new UpdateDeniedException();
@@ -82,7 +103,7 @@ public class HabitService {
     }
 
     public void deleteHabit(Long habitId) {
-        User user = userRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(NotFoundUserException::new);
+        User user = userRepository.findById(getCurrentMemberId()).orElseThrow(NotFoundUserException::new);
         Habit habit = habitRepository.findById(habitId).orElseThrow(NotFoundHabitException::new);
         if (habit.getUser().getId() != user.getId()) {
             throw new DeleteDeniedException();
@@ -99,7 +120,7 @@ public class HabitService {
     }
 
     public void changeHabitPrivacy(Long habitId, PrivacySetting privacySetting) {
-        User user = userRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(NotFoundUserException::new);
+        User user = userRepository.findById(getCurrentMemberId()).orElseThrow(NotFoundUserException::new);
         Habit habit = habitRepository.findById(habitId).orElseThrow(NotFoundHabitException::new);
         if (habit.getUser().getId() != user.getId()) {
             throw new UpdateDeniedException();
