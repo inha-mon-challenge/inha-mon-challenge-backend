@@ -40,8 +40,14 @@ public class FollowController {
     }
 
     @GetMapping("/count/{userId}/following")
-    public ResponseEntity<Result<Long>> countFollow(@PathVariable Long userId){
+    public ResponseEntity<Result<Long>> countFollowing(@PathVariable Long userId){
         Result<Long> count = new Result<>(followRepository.countByFollowerIdAndStatusAccepted(userId));
+        return ResponseEntity.ok(count);
+    }
+
+    @GetMapping("/count/{userId}/follower")
+    public ResponseEntity<Result<Long>> countFollower(@PathVariable Long userId){
+        Result<Long> count = new Result<>(followRepository.countByFollowingIdAndStatusAccepted(userId));
         return ResponseEntity.ok(count);
     }
 
