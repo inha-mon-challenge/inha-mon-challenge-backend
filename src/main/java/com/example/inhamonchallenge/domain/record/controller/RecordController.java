@@ -25,7 +25,7 @@ public class RecordController {
     }
 
     @PostMapping("/habits/{habitId}/records")
-    ResponseEntity<SaveRecordResponse> recordAdd(@ModelAttribute SaveRecordRequest request, @PathVariable Long habitId) {
+    ResponseEntity<SaveRecordResponse> recordAdd(@RequestBody SaveRecordRequest request, @PathVariable Long habitId) {
         SaveRecordResponse response = recordService.addRecord(request, habitId);
         return ResponseEntity.status(CREATED).body(response);
     }
