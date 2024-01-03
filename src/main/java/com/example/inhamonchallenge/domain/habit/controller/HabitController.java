@@ -37,13 +37,13 @@ public class HabitController {
     }
 
     @PostMapping("/habits")
-    ResponseEntity<SaveHabitResponse> habitAdd(@ModelAttribute SaveHabitRequest request) {
+    ResponseEntity<SaveHabitResponse> habitAdd(@RequestBody SaveHabitRequest request) {
         SaveHabitResponse response = habitService.addHabit(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @PutMapping("/habits/{habitId}")
-    ResponseEntity<SaveHabitResponse> habitUpdate(@ModelAttribute SaveHabitRequest request, @PathVariable Long habitId) {
+    ResponseEntity<SaveHabitResponse> habitUpdate(@RequestBody SaveHabitRequest request, @PathVariable Long habitId) {
         SaveHabitResponse response = habitService.updateHabit(request, habitId);
         return ResponseEntity.ok(response);
     }

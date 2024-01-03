@@ -4,6 +4,7 @@ import com.example.inhamonchallenge.domain.common.dto.Result;
 import com.example.inhamonchallenge.domain.follow.dto.FollowRequestResponse;
 import com.example.inhamonchallenge.domain.follow.dto.FollowResponse;
 import com.example.inhamonchallenge.domain.follow.dto.FollowingUserResponse;
+import com.example.inhamonchallenge.domain.follow.repository.FollowRepository;
 import com.example.inhamonchallenge.domain.follow.service.FollowService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,6 +19,7 @@ import java.util.List;
 public class FollowController {
 
     private final FollowService followService;
+    private final FollowRepository followRepository;
 
     @GetMapping("/{userId}/following")
     public ResponseEntity<Result<List<FollowingUserResponse>>> followingList(@PathVariable Long userId){
@@ -35,6 +37,18 @@ public class FollowController {
     public ResponseEntity<Result<List<FollowRequestResponse>>> requestList(){
         Result<List<FollowRequestResponse>> response = followService.getRequestList();
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/count/{userId}/following")
+    public ResponseEntity<Result<Long>> countFollowing(@PathVariable Long userId){
+        Result<Long> count = new Result<>(followRepository.countByFollowerIdAndStatusAccepted(userId));
+        return ResponseEntity.ok(count);
+    }
+
+    @GetMapping("/count/{userId}/follower")
+    public ResponseEntity<Result<Long>> countFollower(@PathVariable Long userId){
+        Result<Long> count = new Result<>(followRepository.countByFollowingIdAndStatusAccepted(userId));
+        return ResponseEntity.ok(count);
     }
 
     @PostMapping("/{userId}")
