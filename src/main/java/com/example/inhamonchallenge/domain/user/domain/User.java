@@ -83,4 +83,8 @@ public class User extends BaseTime {
     public void changeProfile(String profile) {
         this.profile = profile;
     }
+
+    public void changeIntroduction(String introduction) {
+        this.introduction = introduction;
+    }
 }

@@ -69,6 +69,12 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
+    @PutMapping("/change-introduction")
+    ResponseEntity<Void> changeIntroduction(@RequestParam String introduction) {
+        userService.changeIntroduction(introduction);
+        return ResponseEntity.noContent().build();
+    }
+
     @DeleteMapping
     ResponseEntity<Void> deleteUser() {
         userService.deleteUser();
