@@ -16,17 +16,19 @@ import java.util.Optional;
 
 public interface HabitRepository extends JpaRepository<Habit, Long> {
 
-    @Query("SELECT h, r FROM Habit h JOIN FETCH Record r ON h.id = r.habit.id " +
+    @Query("SELECT h, r FROM Habit h LEFT JOIN Record r ON h.id = r.habit.id " +
             "WHERE h.user.id = :userId " +
             "AND h.privacy = 'PUBLIC' " +
-            "AND r.privacy = 'PUBLIC' " +
-            "AND h.user.isDeleted = false")
+            "AND (r.privacy = 'PUBLIC' OR r.id IS NULL) " +
+            "AND h.user.isDeleted = false " +
+            "ORDER BY h.createdAt DESC")
     List<Object[]> findPublicHabitsAndRecordsByUserId(@Param("userId") Long userId);
 
     @Query("SELECT h, r FROM Habit h LEFT JOIN Record r ON h.id = r.habit.id " +
             "WHERE h.user.id = :userId " +
             "AND (h.privacy = 'FOLLOWERS' OR h.privacy = 'PUBLIC') " +
-            "AND ((r.privacy = 'FOLLOWERS' OR r.privacy = 'PUBLIC') OR r.id IS NULL)")
+            "AND ((r.privacy = 'FOLLOWERS' OR r.privacy = 'PUBLIC') OR r.id IS NULL) " +
+            "AND h.user.isDeleted = false")
     List<Object[]> findFollowHabitsAndRecordsByUserId(@Param("userId") Long userId);
 
     @Query("SELECT h FROM Habit h WHERE (h.title LIKE :keyword || '%' OR h.title LIKE '% ' || :keyword || '%') " +

@@ -22,10 +22,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.example.inhamonchallenge.global.security.SecurityUtil.*;
@@ -89,7 +86,12 @@ public class HabitService {
                 .map(m -> HabitAndRecordResponse.from(m.getKey(), m.getValue()))
                 .collect(Collectors.toList());
 
-        return new Result<>(response);
+        List<HabitAndRecordResponse> sortedResponse = response.stream()
+                .sorted(Comparator.comparing(HabitAndRecordResponse::getCreatedAt).reversed())
+                .collect(Collectors.toList());
+
+
+        return new Result<>(sortedResponse);
     }
 
     public SaveHabitResponse updateHabit(SaveHabitRequest request, Long habitId) {
