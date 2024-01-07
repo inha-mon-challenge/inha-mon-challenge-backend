@@ -22,10 +22,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.example.inhamonchallenge.global.security.SecurityUtil.*;
@@ -44,6 +41,14 @@ public class HabitService {
         Habit habit = habitRepository.findById(habitId).orElseThrow(NotFoundHabitException::new);
         List<Record> records = recordRepository.findByHabitId(habitId);
         return HabitAndRecordResponse.from(habit, records);
+    }
+
+    public Result<List<HabitResponse>> getAllHabitsByLoggedInUser() {
+        List<Habit> habits = habitRepository.findByUserIdOrderByCreatedAtDesc(getCurrentMemberId());
+        List<HabitResponse> response = habits.stream()
+                .map(HabitResponse::from)
+                .collect(Collectors.toList());
+        return new Result<>(response);
     }
 
     public SaveHabitResponse addHabit(SaveHabitRequest request) {
@@ -89,7 +94,12 @@ public class HabitService {
                 .map(m -> HabitAndRecordResponse.from(m.getKey(), m.getValue()))
                 .collect(Collectors.toList());
 
-        return new Result<>(response);
+        List<HabitAndRecordResponse> sortedResponse = response.stream()
+                .sorted(Comparator.comparing(HabitAndRecordResponse::getCreatedAt).reversed())
+                .collect(Collectors.toList());
+
+
+        return new Result<>(sortedResponse);
     }
 
     public SaveHabitResponse updateHabit(SaveHabitRequest request, Long habitId) {

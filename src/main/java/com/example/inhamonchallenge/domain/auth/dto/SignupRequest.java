@@ -28,6 +28,8 @@ public class SignupRequest {
 
     @NotBlank(message = "이름 입력은 필수입니다.")
     private String name;
+
+    private String introduction;
     private LocalDate birth;
     private String gender;
 
@@ -36,6 +38,7 @@ public class SignupRequest {
                 .email(email)
                 .password(passwordEncoder.encode(password))
                 .name(name)
+                .introduction(introduction)
                 .birth(birth)
                 .gender(Gender.valueOf(gender.toUpperCase()))
                 .role(Role.ROLE_USER)

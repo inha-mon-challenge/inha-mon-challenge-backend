@@ -67,6 +67,10 @@ public class UserService {
         userRepository.findById(getCurrentMemberId()).ifPresent(user -> user.changeProfile(profile));
     }
 
+    public void changeIntroduction(String introduction) {
+        userRepository.findById(getCurrentMemberId()).ifPresent(user -> user.changeIntroduction(introduction));
+    }
+
     public void deleteUser() {
         userRepository.findById(getCurrentMemberId()).ifPresent(user -> user.changeDeletedStatus(true));
         refreshTokenRepository.deleteByKey(getCurrentMemberId().toString());

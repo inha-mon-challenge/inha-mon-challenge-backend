@@ -15,6 +15,7 @@ public class UserResponse {
     private Long userId;
     private String username;
     private String email;
+    private String introduction;
     private LocalDate birth;
     private Gender gender;
     private String profile;
@@ -25,6 +26,7 @@ public class UserResponse {
                 .userId(user.getId())
                 .username(user.getName())
                 .email(user.getEmail())
+                .introduction(user.getIntroduction())
                 .birth(user.getBirth())
                 .gender(user.getGender())
                 .profile(user.getProfile())
