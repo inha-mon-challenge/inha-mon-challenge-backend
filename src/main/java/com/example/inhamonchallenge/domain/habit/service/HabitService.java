@@ -43,6 +43,14 @@ public class HabitService {
         return HabitAndRecordResponse.from(habit, records);
     }
 
+    public Result<List<HabitResponse>> getAllHabitsByLoggedInUser() {
+        List<Habit> habits = habitRepository.findByUserIdOrderByCreatedAtDesc(getCurrentMemberId());
+        List<HabitResponse> response = habits.stream()
+                .map(HabitResponse::from)
+                .collect(Collectors.toList());
+        return new Result<>(response);
+    }
+
     public SaveHabitResponse addHabit(SaveHabitRequest request) {
         User user = userRepository.findById(getCurrentMemberId()).orElseThrow(NotFoundUserException::new);
         Habit habit = SaveHabitRequest.toEntity(request, user);

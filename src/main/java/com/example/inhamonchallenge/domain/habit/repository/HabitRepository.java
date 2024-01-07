@@ -92,4 +92,6 @@ public interface HabitRepository extends JpaRepository<Habit, Long> {
                                       Pageable pageable);
 
     void deleteByUserId(Long id);
+
+    List<Habit> findByUserIdOrderByCreatedAtDesc(Long userId);
 }

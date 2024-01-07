@@ -29,12 +29,19 @@ public class HabitController {
     }
 
     @GetMapping("/users/{userId}/habits")
-    ResponseEntity<Result<List<HabitAndRecordResponse>>> habitList(@PathVariable Long userId,
+    ResponseEntity<Result<List<HabitAndRecordResponse>>> habitAndRecordList(@PathVariable Long userId,
                                                                    @AuthenticationPrincipal UserDetails userDetails) {
         boolean isLoggedIn = userDetails != null;
         Result<List<HabitAndRecordResponse>> response = habitService.getAllHabitsAndRecordsByUserId(userId, isLoggedIn);
         return ResponseEntity.ok(response);
     }
+
+    @GetMapping("/users/me/habits")
+    ResponseEntity<Result<List<HabitResponse>>> loggedInHabitList() {
+        Result<List<HabitResponse>> response = habitService.getAllHabitsByLoggedInUser();
+        return ResponseEntity.ok(response);
+    }
+
 
     @PostMapping("/habits")
     ResponseEntity<SaveHabitResponse> habitAdd(@RequestBody SaveHabitRequest request) {
