@@ -27,8 +27,28 @@ public class MainPageRecordService {
 
     private final RecordRepository recordRepository;
 
+    public Result<List<RecordResponse>> getMainRecords(Long cursor, boolean isLoggedIn) {
+        if (cursor == null) {
+            cursor = Long.MAX_VALUE;
+        }
+        Pageable pageable = PageRequest.of(0, 4, Sort.by(Sort.Direction.DESC, "id"));
+
+        Slice<Record> mainRecords;
+        if (isLoggedIn) {
+            mainRecords = recordRepository.findFollowingTop4(getCurrentMemberId(), cursor, pageable);
+        } else {
+            mainRecords = recordRepository.findPublicTop4(cursor, pageable);
+
+        }
+
+        return new Result<>(mainRecords.getContent()
+                .stream()
+                .map(RecordResponse::from)
+                .collect(Collectors.toList()));
+    }
+
     public Result<List<RecordResponse>> getFollowingRecords(Long cursor) {
-        if(cursor == null) {
+        if (cursor == null) {
             cursor = Long.MAX_VALUE;
         }
         Pageable pageable = PageRequest.of(0, 4, Sort.by(Sort.Direction.DESC, "id"));
