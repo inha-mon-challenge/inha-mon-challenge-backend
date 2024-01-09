@@ -55,6 +55,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(request -> request
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/mails/**").permitAll()
+                        .requestMatchers("/api/s3/upload/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/habits/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/records/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/users/*/habits").permitAll()
