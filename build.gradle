@@ -34,6 +34,9 @@ dependencies {
     implementation 'org.springframework:spring-context-support:6.0.7'
     implementation 'com.sun.mail:jakarta.mail:2.0.1'
 
+    //s3
+    implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
+
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'com.h2database:h2'
     runtimeOnly 'com.mysql:mysql-connector-j'
