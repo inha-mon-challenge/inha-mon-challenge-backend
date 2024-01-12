@@ -1,6 +1,9 @@
 package com.example.inhamonchallenge.domain.mail.service;
 
 import com.example.inhamonchallenge.domain.mail.dto.EmailVerifyResponse;
+import com.example.inhamonchallenge.domain.mail.exception.AuthTimeOutException;
+import com.example.inhamonchallenge.domain.mail.exception.NotFoundAuthException;
+import com.example.inhamonchallenge.domain.mail.exception.WrongAuthCodeException;
 import com.example.inhamonchallenge.domain.mail.repository.MailRepository;
 import com.example.inhamonchallenge.domain.user.repository.UserRepository;
 import com.example.inhamonchallenge.domain.mail.domain.Mail;
@@ -29,23 +32,25 @@ public class MailAuthService {
 
         String authCode = createCode();
         mailService.sendEmail(email, title, authCode);
-        mailRepository.findByEmail(email).ifPresentOrElse(
-                mail -> mail.updateAuthCode(authCode),
-                () -> mailRepository.save(new Mail(email, authCode))
-        );
+        Optional<Mail> findEmail = mailRepository.findByEmail(email);
+        if(findEmail.isPresent()) {
+            mailRepository.delete(findEmail.get());
+        }
+        mailRepository.save(new Mail(email, authCode));
     }
 
     public EmailVerifyResponse verifiedCode(String email, String authCode) {
         checkDuplicatedEmail(email);
         Optional<Mail> findMail = mailRepository.findByEmail(email);
         if(findMail.isEmpty()) {
-            return EmailVerifyResponse.from(false, "인증 정보가 존재하지 않습니다.");
+            throw new NotFoundAuthException();
         }
-        if(isTimeDifferenceGreaterThan30Minutes(findMail.get().getCreatedAt())) {
-            return EmailVerifyResponse.from(false, "인증 시간이 초과되었습니다.");
+        if(isTimeDifferenceGreaterThan5Minutes(findMail.get().getCreatedAt())) {
+            mailRepository.delete(findMail.get());
+            throw new AuthTimeOutException();
         }
         if(!findMail.get().getCode().equals(authCode)) {
-            return EmailVerifyResponse.from(false, "인증 코드가 일치하지 않습니다.");
+            throw new WrongAuthCodeException();
         }
         mailRepository.delete(findMail.get());
         return EmailVerifyResponse.from(true, "인증에 성공하였습니다.");
@@ -63,10 +68,10 @@ public class MailAuthService {
         return String.format("%06d", randomNumber);
     }
 
-    private static boolean isTimeDifferenceGreaterThan30Minutes(LocalDateTime creationTime) {
+    private static boolean isTimeDifferenceGreaterThan5Minutes(LocalDateTime creationTime) {
         LocalDateTime currentTime = LocalDateTime.now();
         Duration duration = Duration.between(creationTime, currentTime);
         long minutesDifference = Math.abs(duration.toMinutes());
-        return minutesDifference > 30;
+        return minutesDifference > 5;
     }
 }

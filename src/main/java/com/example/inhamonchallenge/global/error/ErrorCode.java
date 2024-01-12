@@ -29,6 +29,9 @@ public enum ErrorCode {
     NOT_FOUND_LIKES_EXCEPTION(404, "존재하지 않는 좋아요입니다.", NOT_FOUND),
     //메일
     UNABLE_TO_SEND_EMAIL(500, "이메일을 발송할 수 없습니다.", HttpStatus.INTERNAL_SERVER_ERROR),
+    NOT_FOUND_AUTH_EXCEPTION(400, "인증 정보가 존재하지 않습니다.", NOT_FOUND),
+    AUTH_TIME_OUT_EXCEPTION(408, "인증 시간이 초과되었습니다.", HttpStatus.REQUEST_TIMEOUT),
+    WRONG_AUTH_CODE_EXCEPTION(401, "인증 코드가 일치하지 않습니다.", HttpStatus.UNAUTHORIZED),
     //인증
     WRONG_EMAIL_EXCEPTION(401, "이메일이 올바르지 않습니다.", HttpStatus.UNAUTHORIZED),
     WRONG_PASSWORD_EXCEPTION(401, "비밀번호가 올바르지 않습니다.", HttpStatus.UNAUTHORIZED),
