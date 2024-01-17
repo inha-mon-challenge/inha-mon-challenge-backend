@@ -5,6 +5,7 @@ import com.example.inhamonchallenge.domain.habit.domain.Habit;
 import com.example.inhamonchallenge.domain.habit.dto.HabitResponse;
 import com.example.inhamonchallenge.domain.habit.dto.SearchHabitResponse;
 import com.example.inhamonchallenge.domain.habit.repository.HabitRepository;
+import com.example.inhamonchallenge.global.redis.RedisService;
 import com.example.inhamonchallenge.global.security.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
@@ -22,6 +23,7 @@ import static com.example.inhamonchallenge.global.security.SecurityUtil.*;
 public class SearchHabitService {
 
     private final HabitRepository habitRepository;
+    private final RedisService redisService;
 
     public Result<List<SearchHabitResponse>> searchHabit(String keyword, Long cursor, boolean isLoggedIn) {
         if (cursor == null) {
@@ -54,6 +56,6 @@ public class SearchHabitService {
     }
 
     public Result<List<String>> autoComplete(String keyword) {
-        return new Result<>(habitRepository.autoComplete(keyword, PageRequest.of(0, 10)));
+        return new Result<>(redisService.getAutocomplete(keyword));
     }
 }
